@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 public class Product {
     
-    private int productId;
+    private int id;
     
     @NotBlank(message = "Description must not be blank")
     @Size(max = 255, message="Description must be fewer than 255 characters")
@@ -35,8 +35,8 @@ public class Product {
     
     private List<Supplier> suppliers;
 
-    public int getProductId() {
-        return productId;
+    public int getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -67,8 +67,8 @@ public class Product {
         return suppliers;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDescription(String description) {
@@ -102,7 +102,7 @@ public class Product {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 31 * hash + this.productId;
+        hash = 31 * hash + this.id;
         hash = 31 * hash + Objects.hashCode(this.description);
         hash = 31 * hash + Objects.hashCode(this.name);
         hash = 31 * hash + Objects.hashCode(this.quantity);
@@ -125,7 +125,7 @@ public class Product {
             return false;
         }
         final Product other = (Product) obj;
-        if (this.productId != other.productId) {
+        if (this.id != other.id) {
             return false;
         }
         if (this.isTax != other.isTax) {
@@ -151,7 +151,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", details=" + details + ", price=" + price + ", suppliers=" + suppliers + '}';
+        return "Product{" + "productId=" + id + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", details=" + details + ", price=" + price + ", suppliers=" + suppliers + '}';
     }
     
     
