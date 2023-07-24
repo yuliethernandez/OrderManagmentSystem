@@ -2,35 +2,91 @@
 package com.we.OrderManagment.dao;
 
 import com.we.OrderManagment.dto.Invoice;
+import com.we.OrderManagment.mapper.CustomerMapper;
+import com.we.OrderManagment.mapper.InvoiceMapper;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class InvoiceDaoImpl implements InvoiceDao{
 
+    @Autowired
+    JdbcTemplate jdbc;
+    
     @Override
     public Invoice getInvoiceByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final String GET_INVOICE_BY_ID = "SELECT * FROM invoice WHERE invoiceId = ?";
+        try{
+            return jdbc.queryForObject(GET_INVOICE_BY_ID, new InvoiceMapper(), id);
+        }catch(DataAccessException e){
+            return null;
+        }
     }
 
     @Override
     public List<Invoice> getAllInvoices() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final String GET_ALL_INVOICES = "SELECT * FROM invoice";
+        try{
+            return jdbc.query(GET_ALL_INVOICES, new InvoiceMapper());
+        }catch(DataAccessException e){
+            return null;
+        }
     }
 
     @Override
     public Invoice addInvoice(Invoice invoice) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final String ADD_INVOICE = "INSERT INTO invoice"
+                + "(shipDate, dueDate, terms, saleRepName, hstTax, subtotal, "
+                + "shippingHandling, notes, orderId) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try{
+           jdbc.update(ADD_INVOICE, 
+                   invoice.getShipDate(),
+                   invoice.getDueDate(),
+                   invoice.getTerms(),
+                   invoice.getSaleRepName(), 
+                   invoice.getHstTax(),
+                   invoice.getSubtotal(),
+                   invoice.getShipppingHandling(),
+                   invoice.getNotes(),
+                   invoice.getOrder().getId());
+           
+            int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+            invoice = this.getInvoiceByID(id);
+
+            return invoice;
+        
+        }catch(DataAccessException e){
+            return null;
+        }
     }
 
     @Override
     public void updateInvoice(Invoice invoice) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final String UPDATE_INVOICE = "UPDATE invoice "
+                + "SET shipDate = ?, dueDate = ?, terms = ?, saleRepName = ?, hstTax = ?, subtotal = ?, "
+                + "shippingHandling = ?, notes = ?, orderId = ?"
+                + "WHERE invoiceId = ?;";
+        jdbc.update(UPDATE_INVOICE, 
+                invoice.getShipDate(),
+                invoice.getDueDate(),
+                invoice.getTerms(),
+                invoice.getSaleRepName(), 
+                invoice.getHstTax(),
+                invoice.getSubtotal(),
+                invoice.getShipppingHandling(),
+                invoice.getNotes(),
+                invoice.getOrder().getId(),
+                invoice.getId());
     }
 
     @Override
     public void deleteInvoiceByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        final String DELETE_INVOICE_BY_ID = "DELETE FROM invoice WHERE invoiceId = ?";
+        jdbc.update(DELETE_INVOICE_BY_ID, id);
     }
     
 }

@@ -22,7 +22,7 @@ public class Product {
     private String name;
     
     @NotBlank(message = "Quantity must not be blank")
-    private int quantity;
+    private int quantity = 0;
     
     @NotNull(message = "The tax information must not be empty")
     private boolean isTax;
@@ -51,7 +51,7 @@ public class Product {
         return quantity;
     }
 
-    public boolean isTax() {
+    public boolean getTax() {
         return isTax;
     }
 
