@@ -2,8 +2,9 @@
 package com.we.OrderManagment.dao;
 
 import com.we.OrderManagment.dto.Invoice;
-import com.we.OrderManagment.mapper.CustomerMapper;
+import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.mapper.InvoiceMapper;
+import com.we.OrderManagment.mapper.OrderMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,7 +29,7 @@ public class InvoiceDaoImpl implements InvoiceDao{
 
     @Override
     public List<Invoice> getAllInvoices() {
-        final String GET_ALL_INVOICES = "SELECT * FROM invoice";
+        final String GET_ALL_INVOICES = "SELECT * FROM invoice;";
         try{
             return jdbc.query(GET_ALL_INVOICES, new InvoiceMapper());
         }catch(DataAccessException e){
@@ -55,7 +56,8 @@ public class InvoiceDaoImpl implements InvoiceDao{
                    invoice.getOrder().getId());
            
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-            invoice = this.getInvoiceByID(id);
+            invoice.setId(id);
+            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
 
             return invoice;
         
@@ -87,6 +89,11 @@ public class InvoiceDaoImpl implements InvoiceDao{
     public void deleteInvoiceByID(int id) {
         final String DELETE_INVOICE_BY_ID = "DELETE FROM invoice WHERE invoiceId = ?";
         jdbc.update(DELETE_INVOICE_BY_ID, id);
+    }
+
+    private Order getOrderForInvoice(int id) {
+        final String GET_ORDER_BY_ID = "SELECT * FROM order WHERE orderId = ?";
+        return jdbc.queryForObject(GET_ORDER_BY_ID, new OrderMapper(), id);
     }
     
 }

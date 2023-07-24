@@ -15,7 +15,7 @@ public class InvoiceMapper implements RowMapper<Invoice>{
     public Invoice mapRow(ResultSet rs, int rowNum) throws SQLException {
         Invoice invoice = new Invoice();
         
-        invoice.setInvoiceId(rs.getInt("invoiceId"));
+        invoice.setId(rs.getInt("invoiceId"));
         invoice.setShipDate(rs.getObject("shipDate", LocalDate.class));
         invoice.setDueDate(rs.getObject("dueDate", LocalDate.class)); 
         invoice.setTerms(rs.getString("terms"));

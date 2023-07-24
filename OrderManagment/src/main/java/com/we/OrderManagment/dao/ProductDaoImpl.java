@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao{
 
     @Override
     public List<Product> getAllProducts() {
-        final String sql = "SELECT * FROM products";
+        final String sql = "SELECT * FROM product";
         try{
             List<Product> products = jdbc.query(sql, new ProductMapper());
             for (Product p: products) {
@@ -53,15 +53,14 @@ public class ProductDaoImpl implements ProductDao{
     @Override
     public Product addProduct(Product product) {
         final String sql = "INSERT INTO product"
-                + "(description, name, quantity, isTax, details, price)"
-                + " VALUES(?, ?, ?, ?, ?, ?)";
+                + "(description, name, quantity, isTax, price)"
+                + " VALUES(?, ?, ?, ?, ?)";
         try{
             jdbc.update(sql,
                 product.getDescription(),
                 product.getName(),
                 product.getQuantity(),
                 product.getTax(),
-                product.getDetails(),
                 product.getPrice());
 
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -80,7 +79,6 @@ public class ProductDaoImpl implements ProductDao{
                 +"name = ?, "
                 +"quantity = ?, "
                 +"isTax = ?, "
-                +"details = ?, "
                 +"price = ? "
                 +"WHERE productId = ?";
         jdbc.update(sql,
@@ -88,7 +86,6 @@ public class ProductDaoImpl implements ProductDao{
                 product.getName(),
                 product.getQuantity(),
                 product.getTax(),
-                product.getDetails(),
                 product.getPrice(),
                 product.getId());
     }

@@ -85,7 +85,7 @@ public class Invoice {
         return order;
     }
 
-    public void setInvoiceId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

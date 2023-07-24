@@ -40,7 +40,7 @@ public class OrderDaoImpl implements OrderDao{
     @Override
     public List<Order> getAllOrders() {
         try{
-            final String GET_ORDERS = "SELECT * FROM order";
+            final String GET_ORDERS = "SELECT * FROM ordercustomer";
             List<Order> list = jdbc.query(GET_ORDERS, new OrderMapper());
             
             return setCustomerAndProductsToOrder(list);
@@ -53,7 +53,7 @@ public class OrderDaoImpl implements OrderDao{
 
     @Override
     public Order addOrder(Order order) {
-        final String ADD_ORDER = "INSERT INTO order"
+        final String ADD_ORDER = "INSERT INTO ordercustomer"
                 + "(details, total, quantity, date, customerId) "
                 + " VALUES(?, ?, ?, ?, ?)";
         try{      
@@ -78,7 +78,7 @@ public class OrderDaoImpl implements OrderDao{
 
     @Override
     public void updateOrder(Order order) {
-        final String UPDATE_ORDER = "UPDATE order "
+        final String UPDATE_ORDER = "UPDATE ordercustomer "
                 + "SET details = ?, total = ?, quantity = ?,"
                 + "date = ?, customerId = ? "
                 + "WHERE orderId = ?;";
@@ -94,7 +94,7 @@ public class OrderDaoImpl implements OrderDao{
 
     @Override
     public void deleteOrderByID(int id) {
-        final String DELETE_ORDER_BY_ID = "DELETE FROM order WHERE orderId = ?";
+        final String DELETE_ORDER_BY_ID = "DELETE FROM ordercustomer WHERE orderId = ?";
         jdbc.update(DELETE_ORDER_BY_ID, id);
 
         
@@ -111,17 +111,16 @@ public class OrderDaoImpl implements OrderDao{
     //object
     private Customer getCustomerForOrder(Order order) {
         final String sql = "SELECT c.* FROM customer c "
-                + "JOIN order o ON c.customerId = o.orderId "
+                + "JOIN ordercustomer o ON c.customerId = o.customerId "
                 + "WHERE o.id = ?";
         return jdbc.queryForObject(sql, new CustomerMapper(), 
                 order.getId());
     }
     //list
     private List<Product> getProductsForOrder(Order order) {
-         final String sql = "SELECT p.* FROM employee p "
-                + "JOIN meeting_employee me ON p.id = me.employeeId "
-                + "WHERE me.meetingId = ?";
-       
+        final String sql = "SELECT p.* FROM product p "
+                + "JOIN ordercustomer o ON c.productId = o.productId "
+                + "WHERE o.id = ?";      
      
         return jdbc.query(sql, new ProductMapper(), order.getId());
     }

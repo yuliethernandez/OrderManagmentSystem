@@ -27,9 +27,6 @@ public class Product {
     @NotNull(message = "The tax information must not be empty")
     private boolean isTax;
     
-    @Size(max = 50, message="Name must be fewer than 50 characters")
-    private String details;
-    
     @NotNull(message = "The price must not be empty")
     private BigDecimal price;
     
@@ -55,9 +52,6 @@ public class Product {
         return isTax;
     }
 
-    public String getDetails() {
-        return details;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -87,10 +81,6 @@ public class Product {
         this.isTax = isTax;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
@@ -107,7 +97,6 @@ public class Product {
         hash = 31 * hash + Objects.hashCode(this.name);
         hash = 31 * hash + Objects.hashCode(this.quantity);
         hash = 31 * hash + (this.isTax ? 1 : 0);
-        hash = 31 * hash + Objects.hashCode(this.details);
         hash = 31 * hash + Objects.hashCode(this.price);
         hash = 31 * hash + Objects.hashCode(this.suppliers);
         return hash;
@@ -140,9 +129,6 @@ public class Product {
         if (!Objects.equals(this.quantity, other.quantity)) {
             return false;
         }
-        if (!Objects.equals(this.details, other.details)) {
-            return false;
-        }
         if (!Objects.equals(this.price, other.price)) {
             return false;
         }
@@ -151,7 +137,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + id + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", details=" + details + ", price=" + price + ", suppliers=" + suppliers + '}';
+        return "Product{" + "productId=" + id + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", price=" + price + ", suppliers=" + suppliers + '}';
     }
     
     

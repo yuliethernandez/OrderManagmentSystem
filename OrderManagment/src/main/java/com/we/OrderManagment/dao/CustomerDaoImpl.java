@@ -18,6 +18,7 @@ public class CustomerDaoImpl implements CustomerDao{
     public Customer getCustomerByID(int id) {
         final String GET_CUSTOMER_BY_ID = "SELECT * FROM customer WHERE customerId = ?";
         try{
+            
             return jdbc.queryForObject(GET_CUSTOMER_BY_ID, new CustomerMapper(), id);
         }catch(DataAccessException e){
             return null;
@@ -26,7 +27,7 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public List<Customer> getAllCustomers() {
-        final String GET_ALL_CUSTOMERS = "SELECT * FROM customer";
+        final String GET_ALL_CUSTOMERS = "select * from customer;";
         try{
             return jdbc.query(GET_ALL_CUSTOMERS, new CustomerMapper());
         }catch(DataAccessException e){
@@ -37,7 +38,7 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public Customer addCustomer(Customer customer) {
         final String ADD_CUSTOMER = "INSERT INTO customer"
-                + "(name, address, city, zipcode, phoneNumer, email, gstNumber, gstExtension) "
+                + "(name, address, city, zipCode, phoneNumber, email, gstNumber, gstExtension) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try{
            jdbc.update(ADD_CUSTOMER, 
@@ -51,7 +52,7 @@ public class CustomerDaoImpl implements CustomerDao{
                    customer.getGstExtension());
            
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-            customer = this.getCustomerByID(id);
+            customer.setId(id);
 
             return customer;
         
@@ -63,7 +64,8 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public void updateCustomer(Customer customer) {
         final String UPDATE_CUSTOMER = "UPDATE customer "
-                + "SET name = ?, address = ?, city = ? , zipcode = ? , phoneNumer = ?, email = ?, gstNumber = ?, gstExtension = ?"
+                + "SET name = ?, address = ?, city = ? , zipcode = ? , phoneNumber = ?, "
+                + "email = ?, gstNumber = ?, gstExtension = ?"
                 + "WHERE customerId = ?;";
         jdbc.update(UPDATE_CUSTOMER, 
                 customer.getName(),

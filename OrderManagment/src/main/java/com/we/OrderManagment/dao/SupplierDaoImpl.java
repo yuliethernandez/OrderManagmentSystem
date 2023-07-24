@@ -35,7 +35,7 @@ public class SupplierDaoImpl implements SupplierDao{
 
     @Override
     public List<Supplier> getAllSuppliers() {
-        final String GET_ALL_SUPPLIERS = "SELECT * FROM supplier";
+        final String GET_ALL_SUPPLIERS = "SELECT * FROM supplier;";
         try{
             List<Supplier> list = jdbc.query(GET_ALL_SUPPLIERS, new SupplierMapper());
             
@@ -60,10 +60,12 @@ public class SupplierDaoImpl implements SupplierDao{
                    supplier.getPhonenumber(),
                    supplier.getEmail(),
                    supplier.getDetails());
-           
+            
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-            supplier = this.getSupplierByID(id);
+            supplier.setId(id);
 
+            supplier.setProducts(this.getProductsForSupplier(supplier));
+            
             return supplier;
         
         }catch(DataAccessException e){
