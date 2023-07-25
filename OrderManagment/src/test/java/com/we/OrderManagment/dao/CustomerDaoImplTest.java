@@ -46,7 +46,7 @@ public class CustomerDaoImplTest {
         c1.setName("La Jeuneuse");
         c1.setPhone("435-754-4568");
         c1.setZipcode("H3C Y4W");
-        customerDao.addCustomer(c1);
+        c1 = customerDao.addCustomer(c1);
         
         Customer c2 = new Customer();
         c2.setAddress("Dudemaine street");
@@ -57,7 +57,7 @@ public class CustomerDaoImplTest {
         c2.setName("Hola Summer");
         c2.setPhone("835-711-1986");
         c2.setZipcode("H3C Y4W");
-        customerDao.addCustomer(c2);
+        c2 = customerDao.addCustomer(c2);
         
         Customer c3 = new Customer();
         c3.setAddress("Theodore street");
@@ -68,7 +68,7 @@ public class CustomerDaoImplTest {
         c3.setName("Bacardi");
         c3.setPhone("485-714-2883");
         c3.setZipcode("H3C Y4W");
-        customerDao.addCustomer(c3);
+        c3 = customerDao.addCustomer(c3);
         
         List<Customer> list = customerDao.getAllCustomers();
         assertNotNull(list, "The list can't be null");

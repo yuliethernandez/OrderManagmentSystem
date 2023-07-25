@@ -53,7 +53,7 @@ public class CustomerDaoImpl implements CustomerDao{
            
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             customer.setId(id);
-
+            
             return customer;
         
         }catch(DataAccessException e){

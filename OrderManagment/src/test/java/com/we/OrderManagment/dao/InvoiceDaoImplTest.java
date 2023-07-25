@@ -85,48 +85,48 @@ public class InvoiceDaoImplTest {
         //Invoice 1
         Invoice invoice1 = new Invoice();
         invoice1.setDueDate(LocalDate.now());
-        invoice1.setHstTax(BigDecimal.TEN);
+        invoice1.setHstTax(new BigDecimal("9.99"));
         invoice1.setNotes("Notes of invoice");
         
         Order order = new Order();
         order.setId(1);
         order.setDate(LocalDate.now());
         order.setQuantity(5);
-        order.setTotal(BigDecimal.TEN);
+        order.setTotal(new BigDecimal("9.99"));
         
         invoice1.setOrder(order);
         invoice1.setSaleRepName("");
         invoice1.setShipDate(LocalDate.now());
         invoice1.setShipppingHandling(BigDecimal.ZERO);
-        invoice1.setSubtotal(BigDecimal.TEN);
+        invoice1.setSubtotal(new BigDecimal("9.99"));
         invoice1.setTerms("Terms of the invoice");        
         invoiceDao.addInvoice(invoice1);
         
         //Invoice 2
         Invoice invoice2 = new Invoice();
         invoice2.setDueDate(LocalDate.now());
-        invoice2.setHstTax(BigDecimal.TEN);
+        invoice2.setHstTax(new BigDecimal("9.99"));
         invoice2.setNotes("Notes of invoice");
         
         invoice2.setOrder(order);
         invoice2.setSaleRepName("");
         invoice2.setShipDate(LocalDate.now());
-        invoice2.setShipppingHandling(BigDecimal.ZERO);
-        invoice2.setSubtotal(BigDecimal.TEN);
+        invoice2.setShipppingHandling(new BigDecimal("12.99"));
+        invoice2.setSubtotal(new BigDecimal("9.99"));
         invoice2.setTerms("Terms of the invoice");        
         invoiceDao.addInvoice(invoice2);
         
         //Invoice 3
         Invoice invoice3 = new Invoice();
         invoice1.setDueDate(LocalDate.now());
-        invoice1.setHstTax(BigDecimal.TEN);
+        invoice1.setHstTax(new BigDecimal("9.99"));
         invoice1.setNotes("Notes of invoice");
         
         invoice3.setOrder(order);
         invoice3.setSaleRepName("");
         invoice3.setShipDate(LocalDate.now());
-        invoice3.setShipppingHandling(BigDecimal.ZERO);
-        invoice3.setSubtotal(BigDecimal.TEN);
+        invoice3.setShipppingHandling(new BigDecimal("12.99"));
+        invoice3.setSubtotal(new BigDecimal("9.99"));
         invoice3.setTerms("Terms of the invoice");        
         invoiceDao.addInvoice(invoice3);
         
@@ -141,6 +141,33 @@ public class InvoiceDaoImplTest {
 
     @Test
     public void testAddAndGetInvoice() {
+        //List of Suppliers
+        List<Supplier> suppliers = new ArrayList<>(); 
+        
+        //Adding my product
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("9.99"));
+        p1.setTax(true);
+        p1.setQuantity(10);        
+        p1.setSuppliers(suppliers);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Caramel cake");
+        p2.setName("Caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(15);        
+        p2.setSuppliers(suppliers);
+        p2 = productDao.addProduct(p2);
+        
+        //List of Products
+        List<Product> products = new ArrayList<>(); 
+        products.add(p1);
+        products.add(p2);
+        
         //Customer
         Customer c1 = new Customer();
         c1.setAddress("Saint-norbert street");
@@ -151,45 +178,33 @@ public class InvoiceDaoImplTest {
         c1.setName("La Jeuneuse");
         c1.setPhone("435-754-4568");
         c1.setZipcode("H3C Y4W");
-        customerDao.addCustomer(c1);
-        
-        //List of Suppliers
-        List<Supplier> suppliers = new ArrayList<>(); 
-        
-        //Product
-        Product product = new Product();
-        product.setDescription("Full chocolat cake");
-        product.setName("chocolat Cake");
-        product.setPrice(BigDecimal.TEN);
-        product.setTax(true);
-        product.setSuppliers(suppliers);
-        productDao.addProduct(product);
-        
-        //Invoice 1
-        Invoice invoice1 = new Invoice();
-        invoice1.setDueDate(LocalDate.now());
-        invoice1.setHstTax(BigDecimal.TEN);
-        invoice1.setNotes("Notes of invoice");
+        c1 = customerDao.addCustomer(c1);
         
         Order order = new Order();
-        order.setId(1);
-        order.setDate(LocalDate.now());
+        order.setDetails("Details of the order");
+        order.setTotal(new BigDecimal("9.99"));
         order.setQuantity(5);
-        order.setTotal(BigDecimal.TEN);
+        order.setDate(LocalDate.now());
+        order.setProducts(products);        
         order.setCustomer(c1);
+        order = orderDao.addOrder(order);
         
-        invoice1.setOrder(order);
-        invoice1.setSaleRepName("");
-        invoice1.setShipDate(LocalDate.now());
-        invoice1.setShipppingHandling(BigDecimal.ZERO);
-        invoice1.setSubtotal(BigDecimal.TEN);
-        invoice1.setTerms("Terms of the invoice");        
+        //Invoice 1
+        Invoice invoice = new Invoice();
+        invoice.setShipDate(LocalDate.now());
+        invoice.setDueDate(LocalDate.now());
+        invoice.setTerms("Terms of the invoice"); 
+        invoice.setSaleRepName("Name of SaleRep");
+        invoice.setHstTax(new BigDecimal("19.99"));
+        invoice.setSubtotal(new BigDecimal("50.99"));
+        invoice.setShipppingHandling(new BigDecimal("3.99"));
+        invoice.setNotes("Notes of invoice");      
+        invoice.setOrder(order);
         
-        Invoice invoiceAdded = invoiceDao.addInvoice(invoice1);
-        
+        Invoice invoiceAdded = invoiceDao.addInvoice(invoice);
         
         assertNotNull(invoiceAdded, "The invoice is null");
-        assertEquals(invoice1, invoiceAdded);
+        assertEquals(invoice, invoiceAdded);
     }
 
 
@@ -213,7 +228,7 @@ public class InvoiceDaoImplTest {
         invoice1.setShipppingHandling(BigDecimal.ZERO);
         invoice1.setSubtotal(BigDecimal.TEN);
         invoice1.setTerms("Terms of the invoice");        
-        invoiceDao.addInvoice(invoice1);
+        Invoice invoiceAdded = invoiceDao.addInvoice(invoice1);
     }
 
  

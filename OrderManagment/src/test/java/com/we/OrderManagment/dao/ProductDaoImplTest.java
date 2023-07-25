@@ -89,14 +89,15 @@ public class ProductDaoImplTest {
         s1.setEmail("costco@hotmail.com");
         s1.setName("Costco");
         s1.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s1);
+        s1 = supplierDao.addSupplier(s1);
+        
         Supplier s2 = new Supplier();
         s2.setAddress("Saint Valentine");
         s2.setDetails("details");
         s2.setEmail("costco@hotmail.com");
         s2.setName("Costco");
         s2.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s2);
+        s2 = supplierDao.addSupplier(s2);
         
         List<Supplier> suppliers = new ArrayList<>();
         suppliers.add(s1);
@@ -153,14 +154,15 @@ public class ProductDaoImplTest {
         s1.setEmail("costco@hotmail.com");
         s1.setName("Costco");
         s1.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s1);
+        s1 = supplierDao.addSupplier(s1);
+        
         Supplier s2 = new Supplier();
         s2.setAddress("Saint Valentine");
         s2.setDetails("details");
         s2.setEmail("costco@hotmail.com");
         s2.setName("Costco");
         s2.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s2);
+        s2 = supplierDao.addSupplier(s2);
         
         List<Supplier> suppliers = new ArrayList<>();
         suppliers.add(s1);
@@ -193,15 +195,16 @@ public class ProductDaoImplTest {
         s1.setDetails("details");
         s1.setEmail("costco@hotmail.com");
         s1.setName("Costco");
-        s1.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s1);
+        s1.setPhonenumber("428-457-4658");        
+        s1 = supplierDao.addSupplier(s1);
+        
         Supplier s2 = new Supplier();
         s2.setAddress("Saint Valentine");
         s2.setDetails("details");
         s2.setEmail("costco@hotmail.com");
         s2.setName("Costco");
         s2.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s2);
+        s2 = supplierDao.addSupplier(s2);
         
         List<Supplier> suppliers = new ArrayList<>();
         suppliers.add(s1);
@@ -211,7 +214,7 @@ public class ProductDaoImplTest {
         Product p1 = new Product();
         p1.setDescription("Full chocolat cake");
         p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
+        p1.setPrice(new BigDecimal("8.50"));
         p1.setTax(true);
         p1.setQuantity(5);        
         p1.setSuppliers(suppliers);
@@ -241,14 +244,15 @@ public class ProductDaoImplTest {
         s1.setEmail("costco@hotmail.com");
         s1.setName("Costco");
         s1.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s1);
+        s1 = supplierDao.addSupplier(s1);
+        
         Supplier s2 = new Supplier();
         s2.setAddress("Saint Valentine");
         s2.setDetails("details");
         s2.setEmail("costco@hotmail.com");
         s2.setName("Costco");
         s2.setPhonenumber("428-457-4658");
-        supplierDao.addSupplier(s2);
+        s2 = supplierDao.addSupplier(s2);
         
         List<Supplier> suppliers = new ArrayList<>();
         suppliers.add(s1);
@@ -258,7 +262,7 @@ public class ProductDaoImplTest {
         Product p1 = new Product();
         p1.setDescription("Full chocolat cake");
         p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
+        p1.setPrice(new BigDecimal("8.50"));
         p1.setTax(true);
         p1.setQuantity(5);        
         p1.setSuppliers(suppliers);

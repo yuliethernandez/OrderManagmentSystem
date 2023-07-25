@@ -56,14 +56,14 @@ public class SupplierDaoImplTest {
         customers.forEach(customer -> {
             customerDao.deleteCustomerByID(customer.getId());
         });
-        List<Supplier> suppliers = supplierDao.getAllSuppliers();
-        suppliers.forEach(supplier -> {
-            supplierDao.deleteSupplierByID(supplier.getId());
-        });
         List<Product> products = productDao.getAllProducts();
         products.forEach(product -> {
             productDao.deleteProductByID(product.getId());
         });
+        List<Supplier> suppliers = supplierDao.getAllSuppliers();
+        suppliers.forEach(supplier -> {
+            supplierDao.deleteSupplierByID(supplier.getId());
+        });     
         
     }
     
@@ -76,6 +76,27 @@ public class SupplierDaoImplTest {
      */
     @Test
     public void testGetAllSuppliers() {
+        //List of Products
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("8.50"));
+        p1.setTax(true);
+        p1.setQuantity(5);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Full caramel cake");
+        p2.setName("caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(5);
+        p2 = productDao.addProduct(p2);
+        
+        List<Product> products = new ArrayList<>();
+        products.add(p1);
+        products.add(p2);
+        
         Supplier s1 = new Supplier();
         s1.setAddress("Saint Valentine");
         s1.setDetails("details");
@@ -97,39 +118,26 @@ public class SupplierDaoImplTest {
         s3.setName("Costco");
         s3.setPhonenumber("428-457-4658");
         
-        //List of Products
-        Product p1 = new Product();
-        p1.setDescription("Full chocolat cake");
-        p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
-        p1.setTax(true);
-        p1.setQuantity(5);
-        productDao.addProduct(p1);
-        
-        Product p2 = new Product();
-        p2.setDescription("Full caramel cake");
-        p2.setName("caramel Cake");
-        p2.setPrice(BigDecimal.TEN);
-        p2.setTax(true);
-        p2.setQuantity(5);
-        productDao.addProduct(p2);
-        
-        List<Product> products = new ArrayList<>();
-        products.add(p1);
-        products.add(p2);
         //Adding the list of products to the Supplier object
         s1.setProducts(products);
         s2.setProducts(products);
         s3.setProducts(products);
         
-        supplierDao.addSupplier(s1);
-        supplierDao.addSupplier(s2);
-        supplierDao.addSupplier(s3);
+        s1 = supplierDao.addSupplier(s1);
+        s2 = supplierDao.addSupplier(s2);
+        s3 = supplierDao.addSupplier(s3);
         
         List<Supplier> suppliers = supplierDao.getAllSuppliers();
         
         assertNotNull(suppliers, "The list is empty");
         assertEquals(3, suppliers.size());
+        
+//        for(Supplier s: suppliers){
+//            assertEquals(s1.getProducts(), s.getProducts());
+//        }
+//        suppliers.forEach(s -> {
+//            assertEquals(s1.getProducts(), s.getProducts());
+//        });        
         
         assertTrue(suppliers.contains(s1));
         assertTrue(suppliers.contains(s2));
@@ -141,6 +149,18 @@ public class SupplierDaoImplTest {
      */
     @Test
     public void testAddSupplier() {
+        //List of Products
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("8.50"));
+        p1.setTax(true);
+        p1.setQuantity(5);
+//        p1.setSuppliers(suppliers);
+        p1 = productDao.addProduct(p1);
+        List<Product> products = new ArrayList<>();
+        products.add(p1);
+        
         Supplier s1 = new Supplier();
         s1.setAddress("Saint Valentine");
         s1.setDetails("details");
@@ -148,59 +168,33 @@ public class SupplierDaoImplTest {
         s1.setName("Costco");
         s1.setPhonenumber("428-457-4658");
         
-        Supplier s2 = new Supplier();
-        s2.setAddress("Saint Valentine");
-        s2.setDetails("details");
-        s2.setEmail("costco@hotmail.com");
-        s2.setName("Costco");
-        s2.setPhonenumber("428-457-4658");
-        
-        Supplier s3 = new Supplier();
-        s3.setAddress("Saint Valentine");
-        s3.setDetails("details");
-        s3.setEmail("costco@hotmail.com");
-        s3.setName("Costco");
-        s3.setPhonenumber("428-457-4658");
-        
-        //List of Products
-        Product p1 = new Product();
-        p1.setDescription("Full chocolat cake");
-        p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
-        p1.setTax(true);
-        p1.setQuantity(5);
-        productDao.addProduct(p1);
-        
-        Product p2 = new Product();
-        p2.setDescription("Full caramel cake");
-        p2.setName("caramel Cake");
-        p2.setPrice(BigDecimal.TEN);
-        p2.setTax(true);
-        p2.setQuantity(5);
-        productDao.addProduct(p2);
-        
-        List<Product> products = new ArrayList<>();
-        products.add(p1);
-        products.add(p2);
-        
         //Adding the list of products to the Supplier object
         s1.setProducts(products);
-        s2.setProducts(products);
-        s3.setProducts(products);
+        
+//        List<Supplier> suppliers = new ArrayList<>();
+//        suppliers.add(s1);
+        
+        
+        
+//        Product p2 = new Product();
+//        p2.setDescription("Full caramel cake");
+//        p2.setName("caramel Cake");
+//        p2.setPrice(BigDecimal.TEN);
+//        p2.setTax(true);
+//        p2.setQuantity(5);
+//        p1.setSuppliers(suppliers);
+//        p2 = productDao.addProduct(p2);
+        
+//        List<Product> products = new ArrayList<>();
+//        products.add(p1);
+//        products.add(p2);
         
         Supplier supplierAdded1 = supplierDao.addSupplier(s1);
-        Supplier supplierAdded2 = supplierDao.addSupplier(s2);
-        Supplier supplierAdded3 = supplierDao.addSupplier(s3);
         
-        assertNotNull(supplierAdded1, "Null object");
-        assertNotNull(supplierAdded2, "Null object");
-        assertNotNull(supplierAdded3, "Null object");
-        
-        assertEquals(s1, supplierAdded1);
-        assertEquals(s2, supplierAdded2);
-        assertEquals(s3, supplierAdded3);
-        
-        //assertTrue(supplierAdded1.getProducts().contains(p2));
+        assertNotNull(supplierAdded1, "Null object");        
+        assertEquals(s1, supplierAdded1);        
+        assertTrue(supplierAdded1.getProducts().contains(p1));
+//        assertTrue(supplierAdded1.getProducts().contains(p2));
     }
 
     /**
@@ -208,37 +202,37 @@ public class SupplierDaoImplTest {
      */
     @Test
     public void testUpdateSupplier() {
+        //List of Products
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("8.50"));
+        p1.setTax(true);
+        p1.setQuantity(5);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Full caramel cake");
+        p2.setName("caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(5);
+        p2 = productDao.addProduct(p2);
+        
+        List<Product> products = new ArrayList<>();
+        products.add(p1);
+        products.add(p2);
+        
         Supplier s1 = new Supplier();
         s1.setAddress("Saint Valentine");
         s1.setDetails("details");
         s1.setEmail("costco@hotmail.com");
         s1.setName("Costco");
         s1.setPhonenumber("428-457-4658");
-        
-        //List of Products
-        Product p1 = new Product();
-        p1.setDescription("Full chocolat cake");
-        p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
-        p1.setTax(true);
-        p1.setQuantity(5);
-        productDao.addProduct(p1);
-        
-        Product p2 = new Product();
-        p2.setDescription("Full caramel cake");
-        p2.setName("caramel Cake");
-        p2.setPrice(BigDecimal.TEN);
-        p2.setTax(true);
-        p2.setQuantity(5);
-        productDao.addProduct(p2);
-        
-        List<Product> products = new ArrayList<>();
-        products.add(p1);
-        products.add(p2);
-        
         //Adding the list of products to the Supplier object
         s1.setProducts(products);
-        
+        s1 = supplierDao.addSupplier(s1);
+                
         Supplier supplierAdded = supplierDao.addSupplier(s1);
 
         s1.setAddress("New address");
@@ -270,10 +264,10 @@ public class SupplierDaoImplTest {
         Product p1 = new Product();
         p1.setDescription("Full chocolat cake");
         p1.setName("chocolat Cake");
-        p1.setPrice(BigDecimal.TEN);
+        p1.setPrice(new BigDecimal("8.50"));
         p1.setTax(true);
         p1.setQuantity(5);
-        productDao.addProduct(p1);
+        p1 = productDao.addProduct(p1);
         
         List<Product> products = new ArrayList<>();
         products.add(p1);

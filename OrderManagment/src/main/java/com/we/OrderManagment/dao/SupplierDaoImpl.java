@@ -48,6 +48,15 @@ public class SupplierDaoImpl implements SupplierDao{
         }
     }
 
+    private List<Product> getProductsForSupplier(Supplier supplier) {
+        final String sql = "SELECT p.* "
+                +"FROM product p "
+                +"INNER JOIN productSupplier ps "
+                +"ON p.productId = ps.productId "
+                +"WHERE supplierId = ?";
+        return jdbc.query(sql, new ProductMapper(), supplier.getId());
+    }
+
     @Override
     public Supplier addSupplier(Supplier supplier) {
         final String ADD_SUPPLIER = "INSERT INTO supplier(`name`, address, phoneNumber, email, details)"
@@ -63,16 +72,29 @@ public class SupplierDaoImpl implements SupplierDao{
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             supplier.setId(id);
 
-            supplier.setProducts(getProductsForSupplier(supplier));
-            
+            //supplier.setProducts(getProductsForSupplier(supplier));
+            if(supplier.getProducts()!=null){
+                insertProductsForSupplier(supplier);
+            }
             return supplier;
         
         }catch(DataAccessException e){
             return null;
         }
     }
+    private void insertProductsForSupplier(Supplier supplier) {
+        final String sql = "INSERT INTO productsupplier(productId, supplierId) "
+                + "VALUES(?, ?)";
+        supplier.getProducts().forEach(product -> {
+            jdbc.update(sql,
+                product.getId(),
+                supplier.getId());
+        });
+    }
+    
 
     @Override
+    @Transactional
     public void updateSupplier(Supplier supplier) {
         final String UPDATE_SUPPLIER = "UPDATE supplier "
                 + "SET name = ?, address = ?, phoneNumber = ?, email = ?, details = ? "
@@ -85,12 +107,18 @@ public class SupplierDaoImpl implements SupplierDao{
                 supplier.getDetails(),
                 supplier.getId());
         
+        updateProductsForSupplier(supplier);
+        
     }
+    private void updateProductsForSupplier(Supplier supplier) {
+        
+    }
+ 
 
     @Override
     @Transactional
     public void deleteSupplierByID(int id) {        
-        final String DELETE_PRODUCT_BY_ID = "DELETE FROM productSupplier WHERE productId = ?";
+        final String DELETE_PRODUCT_BY_ID = "DELETE FROM productSupplier WHERE supplierId = ?";
         jdbc.update(DELETE_PRODUCT_BY_ID, id);
         
         final String DELETE_SUPPLIER_BY_ID = "DELETE FROM supplier WHERE supplierId = ?";
@@ -98,13 +126,10 @@ public class SupplierDaoImpl implements SupplierDao{
       
     }
 
-    private List<Product> getProductsForSupplier(Supplier supplier) {
-        final String sql = "SELECT p.* "
-                +"FROM product p "
-                +"INNER JOIN productSupplier ps "
-                +"ON p.productId = ps.productId "
-                +"WHERE supplierId = ?";
-        return jdbc.query(sql, new ProductMapper(), supplier.getId());
-    }
+    
+
+    
+
+    
     
 }

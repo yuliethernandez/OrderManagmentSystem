@@ -52,9 +52,9 @@ public class ProductDaoImpl implements ProductDao{
 
     @Override
     public Product addProduct(Product product) {
-        final String sql = "INSERT INTO product"
-                + "(`description`, `name`, quantity, tax, price)"
-                + " VALUES(?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO product "
+                + "(`description`, `name`, quantity, tax, price) "
+                + "VALUES(?, ?, ?, ?, ?)";
         try{
             jdbc.update(sql,
                 product.getDescription(),
@@ -66,13 +66,26 @@ public class ProductDaoImpl implements ProductDao{
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             product.setId(id);
             
-            product.setSuppliers(setSupplierForProduct(product));
-            
+            //product.setSuppliers(setSupplierForProduct(product));
+            if(product.getSuppliers()!=null){
+                insertSupplierForProducts(product);
+            }
+                        
             return product;
-        }catch(DataAccessException e){
+        }
+        catch(DataAccessException e){
             return null;
         }        
         
+    }
+    private void insertSupplierForProducts(Product product) {
+        final String sql = "INSERT INTO productsupplier(productId, supplierId) "
+                + "VALUES(?, ?)";
+        product.getSuppliers().forEach(supplier -> {
+            jdbc.update(sql,
+                product.getId(),
+                supplier.getId());
+        });
     }
 
     @Override

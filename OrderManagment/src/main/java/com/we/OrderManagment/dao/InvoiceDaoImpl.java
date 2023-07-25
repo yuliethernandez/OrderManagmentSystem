@@ -39,12 +39,11 @@ public class InvoiceDaoImpl implements InvoiceDao{
 
     @Override
     public Invoice addInvoice(Invoice invoice) {
-        final String ADD_INVOICE = "INSERT INTO invoice"
-                + "(shipDate, dueDate, terms, saleRepName, hstTax, subtotal, "
-                + "shippingHandling, notes, orderId) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO invoice "
+                + "(shipDate, dueDate, terms, saleRepName, hstTax, subtotal, shippingHandling, notes, orderId) " 
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try{
-           jdbc.update(ADD_INVOICE, 
+           jdbc.update(sql, 
                    invoice.getShipDate(),
                    invoice.getDueDate(),
                    invoice.getTerms(),
@@ -57,7 +56,8 @@ public class InvoiceDaoImpl implements InvoiceDao{
            
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             invoice.setId(id);
-            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
+            
+//            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
 
             return invoice;
         
