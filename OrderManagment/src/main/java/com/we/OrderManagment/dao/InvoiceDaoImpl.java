@@ -21,8 +21,13 @@ public class InvoiceDaoImpl implements InvoiceDao{
     public Invoice getInvoiceByID(int id) {
         final String GET_INVOICE_BY_ID = "SELECT * FROM invoice WHERE invoiceId = ?";
         try{
-            return jdbc.queryForObject(GET_INVOICE_BY_ID, new InvoiceMapper(), id);
-        }catch(DataAccessException e){
+            Invoice invoice = jdbc.queryForObject(GET_INVOICE_BY_ID, new InvoiceMapper(), id);
+            
+            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
+            
+            return invoice;
+        }
+        catch(DataAccessException e){
             return null;
         }
     }
@@ -57,7 +62,7 @@ public class InvoiceDaoImpl implements InvoiceDao{
             int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
             invoice.setId(id);
             
-//            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
+            invoice.setOrder(getOrderForInvoice(invoice.getOrder().getId()));
 
             return invoice;
         
@@ -70,7 +75,7 @@ public class InvoiceDaoImpl implements InvoiceDao{
     public void updateInvoice(Invoice invoice) {
         final String UPDATE_INVOICE = "UPDATE invoice "
                 + "SET shipDate = ?, dueDate = ?, terms = ?, saleRepName = ?, hstTax = ?, subtotal = ?, "
-                + "shippingHandling = ?, notes = ?, orderId = ?"
+                + "shippingHandling = ?, notes = ?, orderId = ? "
                 + "WHERE invoiceId = ?;";
         jdbc.update(UPDATE_INVOICE, 
                 invoice.getShipDate(),
@@ -92,7 +97,7 @@ public class InvoiceDaoImpl implements InvoiceDao{
     }
 
     private Order getOrderForInvoice(int id) {
-        final String GET_ORDER_BY_ID = "SELECT * FROM order WHERE orderId = ?";
+        final String GET_ORDER_BY_ID = "SELECT * FROM ordercustomer WHERE orderId = ?";
         return jdbc.queryForObject(GET_ORDER_BY_ID, new OrderMapper(), id);
     }
     
