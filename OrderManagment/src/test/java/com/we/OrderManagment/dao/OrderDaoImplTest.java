@@ -218,11 +218,7 @@ public class OrderDaoImplTest {
         
         Order orderAdded = orderDao.addOrder(order);
         assertNotNull(orderAdded, "The order was not added");
-        assertEquals(order, orderAdded, "Not equals");
-        
-//        Order orderFromDB = orderDao.getOrderByID(orderAdded.getId());
-//        assertEquals(orderAdded, orderFromDB, "Order from DB is not equal");
-        
+        assertEquals(order, orderAdded, "Not equals");        
     }
 
     /**

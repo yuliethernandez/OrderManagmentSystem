@@ -30,7 +30,7 @@ public class OrderDaoImpl implements OrderDao{
             if(customer != null){
                 order.setCustomer(customer);
             }
-            
+            order.setProducts(getProductsForOrder(order));
             return order;
         }
         catch (DataAccessException ex){
@@ -137,7 +137,7 @@ public class OrderDaoImpl implements OrderDao{
                 order.getId()); 
         
         updateProductsForOrder(order);
-        order.setProducts(getProductsForOrder(order));
+        //order.setProducts(getProductsForOrder(order));
     }
     private void updateProductsForOrder(Order order) {
         final String DELETE_PRODUCT_ORDER = 
