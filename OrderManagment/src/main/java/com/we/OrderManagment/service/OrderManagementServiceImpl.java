@@ -34,7 +34,11 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public Customer getCustomerByID(int id) {
-        return customerDao.getCustomerByID(id);
+        Customer customer = customerDao.getCustomerByID(id);
+        if (customer == null){
+            throw new RuntimeException("Could not find the Customer with the id " +id+".");
+        }
+        return customer;
     }
 
     @Override
@@ -50,17 +54,29 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void updateCustomer(Customer customer) {
+        Customer c = customerDao.getCustomerByID(customer.getId());
+        if (c == null){
+            throw new RuntimeException("Could not find the Customer with the id " + customer.getId() +".");
+        }
         customerDao.updateCustomer(customer);
     }
 
     @Override
     public void deleteCustomerByID(int id) {
+        Customer customer = customerDao.getCustomerByID(id);
+        if (customer == null){
+            throw new RuntimeException("Could not find the Customer with the id " +id+".");
+        }
         customerDao.deleteCustomerByID(id);
     }
 
     @Override
     public Invoice getInvoiceByID(int id) {
-        return invoiceDao.getInvoiceByID(id);
+        Invoice inv = invoiceDao.getInvoiceByID(id);
+        if (inv == null){
+            throw new RuntimeException("Could not find the Invoice with the id " +id+".");
+        }
+        return inv;
     }
 
     @Override
@@ -75,6 +91,10 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void updateInvoice(Invoice invoice) {
+        Invoice inv = invoiceDao.getInvoiceByID(invoice.getId());
+        if (inv == null){
+            throw new RuntimeException("Could not find the Invoice with the id " + invoice.getId() +".");
+        }
         invoiceDao.addInvoice(invoice);
     }
 

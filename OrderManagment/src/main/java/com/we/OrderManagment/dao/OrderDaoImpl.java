@@ -7,6 +7,7 @@ import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.mapper.CustomerMapper;
 import com.we.OrderManagment.mapper.OrderMapper;
 import com.we.OrderManagment.mapper.ProductMapper;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -188,6 +189,42 @@ public class OrderDaoImpl implements OrderDao{
 //            });
 //        return list;
 //    }
+
+    @Override
+    public List<Order> getOrdersByDate(LocalDate date) {
+        try{
+            final String GET_ORDER_BY_DATE = "SELECT * FROM ordercustomer WHERE dateOrder = ?;";
+            List<Order> list = jdbc.query(GET_ORDER_BY_DATE, new OrderMapper(), date);
+                        
+            list.forEach(order -> {
+                    order.setProducts(getProductsForOrder(order));
+                    order.setCustomer(getCustomerForOrder(order));
+                });
+            
+            return list;
+        }
+        catch (DataAccessException ex){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Order> getOrdersByCustomer(Customer customer) {
+        try{
+            final String GET_ORDER_BY_CUSTOMER = "SELECT * FROM ordercustomer WHERE customerId = ?;";
+            List<Order> list = jdbc.query(GET_ORDER_BY_CUSTOMER, new OrderMapper(), customer.getId());
+                        
+            list.forEach(order -> {
+                    order.setProducts(getProductsForOrder(order));
+                    order.setCustomer(getCustomerForOrder(order));
+                });
+            
+            return list;
+        }
+        catch (DataAccessException ex){
+            return null;
+        }
+    }
 
    
 

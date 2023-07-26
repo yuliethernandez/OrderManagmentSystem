@@ -8,6 +8,7 @@ import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.dto.Supplier;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -353,4 +354,160 @@ public class OrderDaoImplTest {
         assertNull(orderDao.getOrderByID(orderAdded.getId()), "The order was no deleted");
     }
     
+    @Test
+    public void getOrdersByCustomer(){
+        LocalDate date = LocalDate.now();
+        //Adding my product
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("9.99"));
+        p1.setTax(true);
+        p1.setQuantity(10);        
+//        p1.setSuppliers(suppliers);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Caramel cake");
+        p2.setName("Caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(15);        
+//        p2.setSuppliers(suppliers);
+        p2 = productDao.addProduct(p2);
+        
+        //List of Products
+        List<Product> products = new ArrayList<>(); 
+        products.add(p1);
+        products.add(p2);
+        
+        //Customer
+        Customer c1 = new Customer();
+        c1.setAddress("Saint-norbert street");
+        c1.setCity("Montreal");
+        c1.setEmail("jeuneuse@gmail.com");
+        c1.setGstExtension("RT 0002");
+        c1.setGstNumber(458796258);
+        c1.setName("La Jeuneuse");
+        c1.setPhone("435-754-4568");
+        c1.setZipcode("H3C Y4W");
+        c1 = customerDao.addCustomer(c1);
+        //Customer
+        Customer c2 = new Customer();
+        c2.setAddress("Saint-norbert street");
+        c2.setCity("Montreal");
+        c2.setEmail("jeuneuse@gmail.com");
+        c2.setGstExtension("RT 0002");
+        c2.setGstNumber(458796258);
+        c2.setName("La Jeuneuse");
+        c2.setPhone("435-754-4568");
+        c2.setZipcode("H3C Y4W");
+        c2 = customerDao.addCustomer(c2);
+        
+        Order order = new Order();
+        order.setDetails("Details of the order 1");
+        order.setTotal(new BigDecimal("9.99"));
+        order.setQuantity(5);
+        order.setDate(date);
+        order.setProducts(products);        
+        order.setCustomer(c1);
+        
+        Order order2 = new Order();
+        order2.setDetails("Details of the order 2");
+        order2.setTotal(new BigDecimal("13.99"));
+        order2.setQuantity(5);
+        order2.setDate(date);
+        order2.setProducts(products);        
+        order2.setCustomer(c1);
+        
+        Order order3 = new Order();
+        order3.setDetails("Details of the order 3");
+        order3.setTotal(new BigDecimal("9.99"));
+        order3.setQuantity(5);
+        order3.setDate(date);
+        order3.setProducts(products);        
+        order3.setCustomer(c2);
+        
+        orderDao.addOrder(order);
+        orderDao.addOrder(order2);
+        orderDao.addOrder(order3);
+        
+        List<Order> listCustomer1 = orderDao.getOrdersByCustomer(c1);
+        assertNotNull(listCustomer1);
+        assertEquals(2, listCustomer1.size());
+        
+    }
+    
+    @Test
+    public void getOrdersByDate(){
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = LocalDate.of(2023, Month.MARCH, 10);
+        //Adding my product
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("9.99"));
+        p1.setTax(true);
+        p1.setQuantity(10);        
+//        p1.setSuppliers(suppliers);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Caramel cake");
+        p2.setName("Caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(15);        
+//        p2.setSuppliers(suppliers);
+        p2 = productDao.addProduct(p2);
+        
+        //List of Products
+        List<Product> products = new ArrayList<>(); 
+        products.add(p1);
+        products.add(p2);
+        
+        //Customer
+        Customer c1 = new Customer();
+        c1.setAddress("Saint-norbert street");
+        c1.setCity("Montreal");
+        c1.setEmail("jeuneuse@gmail.com");
+        c1.setGstExtension("RT 0002");
+        c1.setGstNumber(458796258);
+        c1.setName("La Jeuneuse");
+        c1.setPhone("435-754-4568");
+        c1.setZipcode("H3C Y4W");
+        c1 = customerDao.addCustomer(c1);
+        
+        Order order = new Order();
+        order.setDetails("Details of the order 1");
+        order.setTotal(new BigDecimal("9.99"));
+        order.setQuantity(5);
+        order.setDate(date1);
+        order.setProducts(products);        
+        order.setCustomer(c1);
+        
+        Order order2 = new Order();
+        order2.setDetails("Details of the order 2");
+        order2.setTotal(new BigDecimal("13.99"));
+        order2.setQuantity(5);
+        order2.setDate(date1);
+        order2.setProducts(products);        
+        order2.setCustomer(c1);
+        
+        Order order3 = new Order();
+        order3.setDetails("Details of the order 3");
+        order3.setTotal(new BigDecimal("9.99"));
+        order3.setQuantity(5);
+        order3.setDate(date2);
+        order3.setProducts(products);        
+        order3.setCustomer(c1);
+        
+        orderDao.addOrder(order);
+        orderDao.addOrder(order2);
+        orderDao.addOrder(order3);
+        
+        List<Order> listCustomer1 = orderDao.getOrdersByDate(date1);
+        assertNotNull(listCustomer1);
+        assertEquals(2, listCustomer1.size());
+    }
 }
