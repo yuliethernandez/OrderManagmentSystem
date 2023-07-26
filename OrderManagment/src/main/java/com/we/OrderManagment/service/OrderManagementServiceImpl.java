@@ -100,11 +100,19 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void deleteInvoiceByID(int id) {
+        Invoice inv = invoiceDao.getInvoiceByID(id);
+        if (inv == null){
+            throw new RuntimeException("Could not find the Invoice with the id " + id +".");
+        }
         invoiceDao.deleteInvoiceByID(id);
     }
 
     @Override
     public Order getOrderByID(int id) {
+        Order order = orderDao.getOrderByID(id);
+        if (order == null){
+            throw new RuntimeException("Could not find the Order with the id " + id +".");
+        }
         return orderDao.getOrderByID(id);
     }
 
@@ -121,16 +129,28 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void updateOrder(Order order) {
+        Order o = orderDao.getOrderByID(order.getId());
+        if (o == null){
+            throw new RuntimeException("Could not find the Order with the id " + order.getId() +".");
+        }
         orderDao.updateOrder(order);
     }
 
     @Override
     public void deleteOrderByID(int id) {
+        Order o = orderDao.getOrderByID(id);
+        if (o == null){
+            throw new RuntimeException("Could not find the Order with the id " + id +".");
+        }
         orderDao.deleteOrderByID(id);
     }
 
     @Override
     public Product getProductByID(int id) {
+        Product product = productDao.getProductByID(id);
+        if (product == null){
+            throw new RuntimeException("Could not find the Product with the id " + id +".");
+        }
         return productDao.getProductByID(id);
     }
 
@@ -146,16 +166,28 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void updateProduct(Product product) {
+        Product prod = productDao.getProductByID(product.getId());
+        if (prod == null){
+            throw new RuntimeException("Could not find the Product with the id " + product.getId() +".");
+        }
         productDao.updateProduct(product);
     }
 
     @Override
     public void deleteProductByID(int id) {
+        Product prod = productDao.getProductByID(id);
+        if (prod == null){
+            throw new RuntimeException("Could not find the Product with the id " + id +".");
+        }
         productDao.deleteProductByID(id);
     }
 
     @Override
     public Supplier getSupplierByID(int id) {
+        Supplier supplier = supplierDao.getSupplierByID(id);
+        if (supplier == null){
+            throw new RuntimeException("Could not find the Supplier with the id " + id +".");
+        }
         return supplierDao.getSupplierByID(id);
     }
 
@@ -171,11 +203,19 @@ public class OrderManagementServiceImpl implements OrderManagementService{
 
     @Override
     public void updateSupplier(Supplier supplier) {
+        Supplier sup = supplierDao.getSupplierByID(supplier.getId());
+        if (sup == null){
+            throw new RuntimeException("Could not find the Supplier with the id " + supplier.getId() +".");
+        }
         supplierDao.updateSupplier(supplier);
     }
 
     @Override
     public void deleteSupplierByID(int id) {
+        Supplier supplier = supplierDao.getSupplierByID(id);
+        if (supplier == null){
+            throw new RuntimeException("Could not find the Supplier with the id " + id +".");
+        }
         supplierDao.deleteSupplierByID(id);
     }
     
