@@ -1,140 +1,162 @@
 
 package com.we.OrderManagment.service;
 
+import com.we.OrderManagment.dao.CustomerDao;
+import com.we.OrderManagment.dao.InvoiceDao;
+import com.we.OrderManagment.dao.OrderDao;
+import com.we.OrderManagment.dao.ProductDao;
+import com.we.OrderManagment.dao.SupplierDao;
 import com.we.OrderManagment.dto.Customer;
 import com.we.OrderManagment.dto.Invoice;
 import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.dto.Supplier;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderManagementServiceImpl implements OrderManagementService{
+    @Autowired
+    InvoiceDao invoiceDao;
+    
+    @Autowired
+    OrderDao orderDao;
+    
+    @Autowired
+    SupplierDao supplierDao;
+    
+    @Autowired
+    ProductDao productDao;
+    
+    @Autowired
+    CustomerDao customerDao;
 
     @Override
     public Customer getCustomerByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return customerDao.getCustomerByID(id);
     }
 
     @Override
     public List<Customer> getAllCustomers() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return customerDao.getAllCustomers();
     }
 
     @Override
     public Customer addCustomer(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //validate method for customer
+        return customerDao.addCustomer(customer);
     }
 
     @Override
     public void updateCustomer(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        customerDao.updateCustomer(customer);
     }
 
     @Override
     public void deleteCustomerByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        customerDao.deleteCustomerByID(id);
     }
 
     @Override
     public Invoice getInvoiceByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return invoiceDao.getInvoiceByID(id);
     }
 
     @Override
     public List<Invoice> getAllInvoices() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return invoiceDao.getAllInvoices();
     }
 
     @Override
     public Invoice addInvoice(Invoice invoice) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return invoiceDao.addInvoice(invoice);
     }
 
     @Override
     public void updateInvoice(Invoice invoice) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        invoiceDao.addInvoice(invoice);
     }
 
     @Override
     public void deleteInvoiceByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        invoiceDao.deleteInvoiceByID(id);
     }
 
     @Override
     public Order getOrderByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return orderDao.getOrderByID(id);
     }
 
     @Override
     public List<Order> getAllOrders() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return orderDao.getAllOrders();
     }
 
     @Override
     public Order addOrder(Order order) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //validate order
+        return orderDao.addOrder(order);
     }
 
     @Override
     public void updateOrder(Order order) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        orderDao.updateOrder(order);
     }
 
     @Override
     public void deleteOrderByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        orderDao.deleteOrderByID(id);
     }
 
     @Override
     public Product getProductByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return productDao.getProductByID(id);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return productDao.getAllProducts();
     }
 
     @Override
     public Product addProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return productDao.addProduct(product);
     }
 
     @Override
     public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        productDao.updateProduct(product);
     }
 
     @Override
     public void deleteProductByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        productDao.deleteProductByID(id);
     }
 
     @Override
     public Supplier getSupplierByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return supplierDao.getSupplierByID(id);
     }
 
     @Override
     public List<Supplier> getAllSuppliers() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return supplierDao.getAllSuppliers();
     }
 
     @Override
     public Supplier addSupplier(Supplier supplier) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return supplierDao.addSupplier(supplier);
     }
 
     @Override
     public void updateSupplier(Supplier supplier) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        supplierDao.updateSupplier(supplier);
     }
 
     @Override
     public void deleteSupplierByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        supplierDao.deleteSupplierByID(id);
     }
     
 }

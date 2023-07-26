@@ -284,6 +284,68 @@ public class InvoiceDaoImplTest {
  
     @Test
     public void testDeleteInvoiceByID() {
+        //Adding my product
+        Product p1 = new Product();
+        p1.setDescription("Full chocolat cake");
+        p1.setName("chocolat Cake");
+        p1.setPrice(new BigDecimal("9.99"));
+        p1.setTax(true);
+        p1.setQuantity(10);        
+//        p1.setSuppliers(suppliers);
+        p1 = productDao.addProduct(p1);
+        
+        Product p2 = new Product();
+        p2.setDescription("Caramel cake");
+        p2.setName("Caramel Cake");
+        p2.setPrice(new BigDecimal("8.50"));
+        p2.setTax(true);
+        p2.setQuantity(15);        
+//        p2.setSuppliers(suppliers);
+        p2 = productDao.addProduct(p2);
+        
+        //List of Products
+        List<Product> products = new ArrayList<>(); 
+        products.add(p1);
+        products.add(p2);
+        
+        //Customer
+        Customer c1 = new Customer();
+        c1.setAddress("Saint-norbert street");
+        c1.setCity("Montreal");
+        c1.setEmail("jeuneuse@gmail.com");
+        c1.setGstExtension("RT 0002");
+        c1.setGstNumber(458796258);
+        c1.setName("La Jeuneuse");
+        c1.setPhone("435-754-4568");
+        c1.setZipcode("H3C Y4W");
+        c1 = customerDao.addCustomer(c1);
+        
+        Order order = new Order();
+        order.setDetails("Details of the order");
+        order.setTotal(new BigDecimal("9.99"));
+        order.setQuantity(5);
+        order.setDate(LocalDate.now());
+        order.setProducts(products);        
+        order.setCustomer(c1);
+        order = orderDao.addOrder(order);
+        
+        //Invoice 1
+        Invoice invoice = new Invoice();
+        invoice.setShipDate(LocalDate.now());
+        invoice.setDueDate(LocalDate.now());
+        invoice.setTerms("Terms of the invoice"); 
+        invoice.setSaleRepName("Name of SaleRep");
+        invoice.setHstTax(new BigDecimal("19.99"));
+        invoice.setSubtotal(new BigDecimal("50.99"));
+        invoice.setShipppingHandling(new BigDecimal("3.99"));
+        invoice.setNotes("Notes of invoice");      
+        invoice.setOrder(order);
+        
+        invoice = invoiceDao.addInvoice(invoice);
+        invoiceDao.deleteInvoiceByID(invoice.getId());
+        
+        assertNull(invoiceDao.getInvoiceByID(invoice.getId()));
     }
+    
     
 }
