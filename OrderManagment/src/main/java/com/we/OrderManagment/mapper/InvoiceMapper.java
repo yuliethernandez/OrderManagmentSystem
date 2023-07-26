@@ -22,7 +22,7 @@ public class InvoiceMapper implements RowMapper<Invoice>{
         invoice.setSaleRepName(rs.getString("saleRepName"));
         invoice.setHstTax(rs.getBigDecimal("hstTax"));
         invoice.setSubtotal(rs.getBigDecimal("subtotal"));
-        invoice.setShipppingHandling(rs.getBigDecimal("shipppingHandling"));
+        invoice.setShipppingHandling(rs.getBigDecimal("shippingHandling"));
         invoice.setNotes(rs.getString("notes"));
         
         Order order = new Order();

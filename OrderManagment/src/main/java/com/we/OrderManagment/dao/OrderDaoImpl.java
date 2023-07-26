@@ -30,6 +30,7 @@ public class OrderDaoImpl implements OrderDao{
             if(customer != null){
                 order.setCustomer(customer);
             }
+            
             order.setProducts(getProductsForOrder(order));
             return order;
         }
