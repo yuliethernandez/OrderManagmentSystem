@@ -27,8 +27,54 @@
 
   
 <div class="container">
-  <h3>Order's Management System</h3>
-  <p>Welcome to Order's Management System</p>
+  <h3>Details:</h3>
+          
+    <div class="row m-4 border border-dark">
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Name: </strong>
+                <span th:utext="${product.name}">display name</span></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>In Stock:</strong>
+                <span th:text="${product.quantity}">display address</span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Description:</strong>
+                <span th:text="${product.description}">display Description:</span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Taxes: </strong>
+                <span th:if="${tax}">9.975% (GST)</span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Details: </strong>
+                <span th:text="${product.price}">display Details:</span>
+            </div>
+        </div>
+        
+    </div>  
+        
+
+    <br>
+    <div class="d-flex justify-content-between w-50 mx-auto mb-4">
+        <a href="#" th:href="@{/editProduct(id=${product.id})}">
+            <button type="button" class="btn btn btn-primary">Edit</button>
+        </a>
+        <a href="#" th:href="@{/deleteProduct(id=${product.id})}">
+            <button type="button" class="btn btn btn-primary">Delete</button>
+        </a>
+        <a href="/products">
+            <button type="button" class="btn btn-primary">Back to Products</button>
+        </a>
+    </div>
 </div>
 
 <footer>

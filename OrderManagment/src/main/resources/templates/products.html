@@ -27,7 +27,7 @@
 
   
 <div class="container">        
-    <a href="addSupplier"><button type="button" class="btn btn-primary">
+    <a href="addProduct"><button type="button" class="btn btn-primary">
             Add Product</button></a>
     <div class="row m-4 border ">
         <div class="col text-left m-3">
@@ -37,17 +37,17 @@
                 <tr>
                     <th>Product's Name</th>
                     <th>Price</th>
-                    <th>Email</th>
                     <th>In stock</th>
+                    <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product ${products}">
-                    <td th:text="${product.name}">Supplier's Name</td>
-                    <td th:text="${product.address}">Address</td>
-                    <td th:text="${product.email}">Email</td>
+                <tr th:each="product: ${products}">
+                    <td th:text="${product.name}">Product's Name</td>
+                    <td th:text="${product.price}">Price</td>
+                    <td th:text="${product.quantity}">Email</td>
                     <td><a href="#" th:href="@{/productDetails(id=${product.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editProduct(id=${product.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteProduct(id=${product.id})}">Delete</a></td>
