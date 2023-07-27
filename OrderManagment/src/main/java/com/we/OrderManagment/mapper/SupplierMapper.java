@@ -11,7 +11,16 @@ public class SupplierMapper implements RowMapper<Supplier>{
 
     @Override
     public Supplier mapRow(ResultSet rs, int rowNum) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Supplier supplier = new Supplier();
+        
+        supplier.setId(rs.getInt("supplierId"));
+        supplier.setName(rs.getString("name"));
+        supplier.setAddress(rs.getString("address"));
+        supplier.setPhonenumber(rs.getString("phoneNumber"));
+        supplier.setEmail(rs.getString("email"));
+        supplier.setDetails(rs.getString("details"));
+        
+        return supplier;
     }
     
 }

@@ -2,7 +2,9 @@
 package com.we.OrderManagment.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -26,6 +28,8 @@ public class Customer {
     @Size(max = 7, message="Zipcode must be fewer than 50 characters")
     private String zipcode;
     
+    @NotNull
+    @Email(message = "Please provide a valid email address")
     private String email;
     
     @NotBlank(message = "Zipcode must not be blank")

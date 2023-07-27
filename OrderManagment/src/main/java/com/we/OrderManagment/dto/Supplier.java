@@ -1,6 +1,7 @@
 
 package com.we.OrderManagment.dto;
 
+import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -30,6 +31,8 @@ public class Supplier {
     
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String details;
+    
+    private List<Product> products;
 
     public int getId() {
         return id;
@@ -79,15 +82,24 @@ public class Supplier {
         this.details = details;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.address);
-        hash = 79 * hash + Objects.hashCode(this.phonenumber);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.details);
+        int hash = 3;
+        hash = 73 * hash + this.id;
+        hash = 73 * hash + Objects.hashCode(this.name);
+        hash = 73 * hash + Objects.hashCode(this.address);
+        hash = 73 * hash + Objects.hashCode(this.phonenumber);
+        hash = 73 * hash + Objects.hashCode(this.email);
+        hash = 73 * hash + Objects.hashCode(this.details);
+        hash = 73 * hash + Objects.hashCode(this.products);
         return hash;
     }
 
@@ -118,13 +130,16 @@ public class Supplier {
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        return Objects.equals(this.details, other.details);
+        if (!Objects.equals(this.details, other.details)) {
+            return false;
+        }
+        return Objects.equals(this.products, other.products);
     }
 
     @Override
     public String toString() {
-        return "supplier{" + "id=" + id + ", name=" + name + ", address=" + address + ", phonenumber=" + phonenumber + ", email=" + email + ", details=" + details + '}';
+        return "Supplier{" + "id=" + id + ", name=" + name + ", address=" + address + ", phonenumber=" + phonenumber + ", email=" + email + ", details=" + details + ", products=" + products + '}';
     }
-    
+
     
 }
