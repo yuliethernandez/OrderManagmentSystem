@@ -2,7 +2,6 @@
 package com.we.OrderManagment.controller;
 
 import com.we.OrderManagment.dto.Product;
-import com.we.OrderManagment.dto.Supplier;
 import com.we.OrderManagment.service.OrderManagementService;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,78 +20,78 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class SupplierController {
+public class ProductController {
     @Autowired
     OrderManagementService service;
     
-    Set<ConstraintViolation<Supplier>> violations = new HashSet<>();
+    Set<ConstraintViolation<Product>> violations = new HashSet<>();
     
-    @GetMapping("suppliers")
-    public String getAllSuppliers(Model model) {  
-        List<Supplier> suppliers = service.getAllSuppliers();
-        model.addAttribute("suppliers", suppliers);
+    @GetMapping("products")
+    public String getAllProducts(Model model) {  
+        List<Product> products = service.getAllProducts();
+        model.addAttribute("products", products);
                 
-        return "suppliers";
+        return "products";
     }
     
-    @GetMapping("deleteSupplier")
-    public String deleteSupplier(HttpServletRequest request) {
+    @GetMapping("deleteProduct")
+    public String deleteProduct(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        service.deleteSupplierByID(id);
-        return "redirect:/suppliers";
+        service.deleteProductByID(id);
+        return "redirect:/products";
     } 
     
     @GetMapping("supplierDetails")
-    public String courseSupplier(Integer id, Model model) {
-        Supplier supplier = service.getSupplierByID(id);
+    public String courseProduct(Integer id, Model model) {
+        Product supplier = service.getProductByID(id);
                 
         model.addAttribute("supplier", supplier);
         return "supplierDetails";
     }
     
-    @GetMapping("editSupplier")
-    public String getEditSupplierById(Integer id, Model model) {
-        Supplier supplier;
+    @GetMapping("editProduct")
+    public String getEditProductById(Integer id, Model model) {
+        Product supplier;
         if(id != null){
-            supplier = service.getSupplierByID(id);
+            supplier = service.getProductByID(id);
         }else{
-            return "suppliers";
+            return "products";
         }
         
         model.addAttribute("supplier", supplier);
         
-        return "editSupplier";
+        return "editProduct";
         
     }
     
-    @PostMapping("editSupplier")
-    public String editSupplier(@Valid Supplier supplier, BindingResult result, 
+    @PostMapping("editProduct")
+    public String editProduct(@Valid Product supplier, BindingResult result, 
             HttpServletRequest request, Model model) {
         
         if (result.hasErrors()) {
-            Supplier sup = service.getSupplierByID(supplier.getId());
+            Product sup = service.getProductByID(supplier.getId());
             model.addAttribute("supplier", sup);
                         
-            return "editSupplier";
+            return "editProduct";
         }
         
-        service.updateSupplier(supplier);
+        service.updateProduct(supplier);
 
-        return "redirect:/suppliers";
+        return "redirect:/products";
     }
     
-    @GetMapping("addSupplier")
-    public String addSupplierPage(Model model, HttpServletRequest request) {     
+    @GetMapping("addProduct")
+    public String addProductPage(Model model, HttpServletRequest request) {     
         List<Product> products = service.getAllProducts();
         model.addAttribute("products", products);
         model.addAttribute("errors", violations);
         
-        return "addSupplier";
+        return "addProduct";
     }
    
-    @PostMapping("addSupplier")
-    public String addSupplier(Model model, HttpServletRequest request) {   
-        Supplier supplier = new Supplier();
+    @PostMapping("addProduct")
+    public String addProduct(Model model, HttpServletRequest request) {   
+        Product supplier = new Product();
         String[] productsIds = request.getParameterValues("productsId");
         if(productsIds != null){
             List<Product> products = new ArrayList<>();
@@ -113,13 +112,13 @@ public class SupplierController {
 
         if(violations.isEmpty()) {  
             if(supplier.getProducts() == null) {                 
-                return "redirect:/suppliers";
+                return "redirect:/products";
             }
-            service.addSupplier(supplier);            
-            return "redirect:/suppliers";
+            service.addProduct(supplier);            
+            return "redirect:/products";
         }
                 
-        return "redirect:/addSupplier";
+        return "redirect:/addProduct";
 
     }
     

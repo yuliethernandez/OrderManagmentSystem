@@ -13,6 +13,6 @@ public interface SupplierDao {
     void updateSupplier(Supplier supplier);
     void deleteSupplierByID(int id);
     
-    //List<Product> getProductsForSupplier(Supplier supplier);
+    List<Product> getProductsForSupplier(Supplier supplier);
             
 }

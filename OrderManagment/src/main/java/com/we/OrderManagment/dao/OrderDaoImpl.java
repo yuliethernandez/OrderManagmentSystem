@@ -199,6 +199,7 @@ public class OrderDaoImpl implements OrderDao{
             list.forEach(order -> {
                     order.setProducts(getProductsForOrder(order));
                     order.setCustomer(getCustomerForOrder(order));
+                    
                 });
             
             return list;

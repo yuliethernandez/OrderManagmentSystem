@@ -3,8 +3,6 @@ package com.we.OrderManagment.controller;
 
 import com.we.OrderManagment.dto.Customer;
 import com.we.OrderManagment.service.OrderManagementService;
-import java.sql.Array;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,67 +63,59 @@ public class CustomerController {
     }
     
     @PostMapping("editCustomer")
-    public String editCustomer(@Valid Customer customer, BindingResult result, HttpServletRequest request, Model model) {
+    public String editCustomer(@Valid Customer customer, BindingResult result, 
+            HttpServletRequest request, Model model) {
+        
+        String gstNumber = request.getParameter("gstNumber");
+        customer.setGstNumber(Integer.parseInt(gstNumber));
         
         if (result.hasErrors()) {
-            List<Hero> heroes = heroService.getAllHeroes();
-            model.addAttribute("heroes", heroes);
-
-            List<Location> locations = locationService.getAllLocations();
-            model.addAttribute("locations", locations);
+            Customer cust = service.getCustomerByID(customer.getId());
+            model.addAttribute("customer", cust);
                         
             return "editCustomer";
         }
-                
-        int heroId = Integer.parseInt(request.getParameter("heroId"));
-        int locationId = Integer.parseInt(request.getParameter("locationId")); 
-
-        customer.setHero(heroService.getHeroByID(heroId));
-        customer.setLocation(locationService.getLocationById(locationId));
-        customer.setDate(LocalDateTime.parse(request.getParameter("date")));
-
+        
         service.updateCustomer(customer);
 
         return "redirect:/customers";
     }
     
-//    @GetMapping("addCustomer")
-//    public String addCustomerPage(Model model, HttpServletRequest request) {     
-//
-//        List<Hero> heroes = heroService.getAllHeroes();
-//        List<Location> locations = locationService.getAllLocations();
-//        model.addAttribute("heroes", heroes);
-//        model.addAttribute("locations", locations);        
-//        model.addAttribute("errors", violations);
-//        
-//        return "addCustomer";
-//    }
-//    
-//    @PostMapping("addCustomer")
-//    public String addCustomer(Model model, HttpServletRequest request) {     
-//        Customer customer = new Customer();
-//        customer.setDescription(request.getParameter("description"));        
-//
-//        String heroId = request.getParameter("heroId");
-//        String locationId = request.getParameter("locationId");        
-//
-//        customer.setHero(service.getHeroByID(Integer.parseInt(heroId)));
-//        customer.setLocation(service.getLocationById(Integer.parseInt(locationId)));
-//        
-//        if(!request.getParameter("date").equals("")){
-//            customer.setDate(LocalDateTime.parse(request.getParameter("date")));
-//        }
-//        
-//        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
-//        violations = validate.validate(customer);
-//
-//        if(violations.isEmpty()) {                 
-//            service.addCustomer(customer);            
-//            return "redirect:/customers";
-//        }
-//                
-//        return "redirect:/addCustomer";
-//
-//    }
+    @GetMapping("addCustomer")
+    public String addCustomerPage(Model model, HttpServletRequest request) {     
+       
+        model.addAttribute("errors", violations);
+        
+        return "addCustomer";
+    }
+   
+    @PostMapping("addCustomer")
+    public String addCustomer(Model model, HttpServletRequest request) {     
+        Customer customer = new Customer();
+        customer.setAddress(request.getParameter("address"));   
+        customer.setName(request.getParameter("name"));
+        customer.setCity(request.getParameter("city"));
+        customer.setZipcode(request.getParameter("zipcode"));
+        customer.setEmail(request.getParameter("email"));
+        String gstNumber = request.getParameter("gstNumber");
+        if(!gstNumber.isBlank()){
+            customer.setGstNumber(Integer.parseInt(gstNumber));
+        }
+        
+        customer.setGstExtension(request.getParameter("gstExtension"));
+        customer.setPhone(request.getParameter("phone"));
+      
+   
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(customer);
+
+        if(violations.isEmpty()) {                 
+            service.addCustomer(customer);            
+            return "redirect:/customers";
+        }
+                
+        return "redirect:/addCustomer";
+
+    }
    
 }

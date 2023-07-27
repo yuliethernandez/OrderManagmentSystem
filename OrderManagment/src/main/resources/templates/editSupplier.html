@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order's Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Order's Management System</a>
+    </div>
+    <ul class="nav navbar-nav">      
+      <li><a href="orders">Orders</a></li>
+      <li><a href="invoices">Invoices</a></li>
+      <li><a href="products">Products</a></li>
+      <li><a href="suppliers">Customers</a></li>
+      <li><a href="suppliers">Suppliers</a></li>
+    </ul>
+  </div>
+</nav>
+
+  
+<div class="container">
+  <div class="row m-4 border border-dark">
+        
+        <div class="col text-center m-3">
+            <div class="text-center">
+                <h2>Edit Supplier: <span th:text="${supplier.name}"></span></label></h2>
+                <br>
+                <div class="col-7 text-center m-auto">
+                    <form th:action="@{editSupplier(id=${supplier.id})}" method="POST">                         
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 control-label text-right">Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="name"
+                                       id="name" class="form-control" 
+                                       th:value="${supplier.name}"/>
+                                <div th:if="${#fields.hasErrors('supplier.name')}">
+                                    <p th:each="error: ${#fields.errors('supplier.name')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad supplier's Name</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 control-label text-right">Address:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="address"
+                                       id="address" class="form-control" 
+                                       th:value="${supplier.address}"/>
+                                <div th:if="${#fields.hasErrors('supplier.address')}">
+                                    <p th:each="error: ${#fields.errors('supplier.address')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad supplier's Address</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 control-label text-right">Email:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="email"
+                                       id="email" class="form-control" 
+                                       th:value="${supplier.email}"/>
+                                <div th:if="${#fields.hasErrors('supplier.email')}">
+                                    <p th:each="error: ${#fields.errors('supplier.email')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad supplier's Email</p>
+                                </div>
+                            </div>                            
+                        </div> 
+                        <div class="form-group row">
+                            <label for="phonenumber" class="col-md-4 control-label text-right">Phone Number:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="phonenumber"
+                                       id="phonenumber" class="form-control" 
+                                       th:value="${supplier.phonenumber}"/>
+                                <div th:if="${#fields.hasErrors('supplier.phonenumber')}">
+                                    <p th:each="error: ${#fields.errors('supplier.phonenumber')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad supplier's Phone Number</p>
+                                </div>
+                            </div>                            
+                        </div>  
+                        
+                        
+                        
+                        <div class="form-group row">
+                            <label for="details" class="col-md-4 control-label text-right">Details:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="details"
+                                       id="details" class="form-control" 
+                                       th:value="${supplier.details}"/>
+                                <div th:if="${#fields.hasErrors('supplier.details')}">
+                                    <p th:each="error: ${#fields.errors('supplier.details')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad supplier's Zip-code</p>
+                                </div>
+                            </div>                            
+                        </div> 
+                        
+                        
+                                   
+                        
+                                  
+                        <br>
+                        
+                        <button type="submit" class="btn btn-primary">Edit Supplier</button>
+                        <a href="/suppliers">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        <br>
+                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Footer</p>
+      </div>
+
+</footer>
+    
+</body>
+
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: black;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+</style>
+
+</html>
+

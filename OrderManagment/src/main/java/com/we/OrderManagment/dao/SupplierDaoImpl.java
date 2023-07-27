@@ -48,7 +48,8 @@ public class SupplierDaoImpl implements SupplierDao{
         }
     }
 
-    private List<Product> getProductsForSupplier(Supplier supplier) {
+    @Override
+    public List<Product> getProductsForSupplier(Supplier supplier) {
         final String sql = "SELECT p.* "
                 +"FROM product p "
                 +"INNER JOIN productSupplier ps "

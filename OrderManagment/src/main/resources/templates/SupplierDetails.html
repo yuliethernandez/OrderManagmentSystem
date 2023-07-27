@@ -19,7 +19,7 @@
       <li><a href="orders">Orders</a></li>
       <li><a href="invoices">Invoices</a></li>
       <li><a href="products">Products</a></li>
-      <li><a href="customers">Customers</a></li>
+      <li><a href="suppliers">Customers</a></li>
       <li><a href="suppliers">Suppliers</a></li>
     </ul>
   </div>
@@ -33,62 +33,68 @@
         <br>
         <div class="row">
             <div class="col-6 text-left"><strong>Name: </strong>
-                <span th:utext="${customer.name}">display name</span></div>
+                <span th:utext="${supplier.name}">display name</span></div>
         </div>
         <br>
         <div class="row">
             <div class="col-6 text-left"><strong>Address:</strong>
-                <span th:text="${customer.address}">display address</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>City:</strong>
-                <span th:text="${customer.city}">display City:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Zip-code:</strong>
-                <span th:text="${customer.zipcode}">display Zip-code</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Email: </strong>
-                <span th:text="${customer.email}">display Email:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>GST Number:</strong>
-                <span th:text="${customer.gstNumber}">GST Number:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>GST Extension: </strong>
-                <span th:text="${customer.gstExtension}">display GST Extension:</span>
+                <span th:text="${supplier.address}">display address</span>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-6 text-left"><strong>Phone Number:</strong>
-                <span th:text="${customer.phone}">display Phone Number:</span>
+                <span th:text="${supplier.phonenumber}">display Phone Number:</span>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Email: </strong>
+                <span th:text="${supplier.email}">display Email:</span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6 text-left"><strong>Details </strong>
+                <span th:text="${supplier.details}">display Details:</span>
+            </div>
+        </div>
+        <br>
+        <h3>Products supplies by <span th:utext="${supplier.name}"></span>:</h3>
+        <div class="row m-4 border ">
+        <div class="col text-left m-3">
+            <br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Product's Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product: ${supplier.products}">
+                    <td th:text="${product.name}">Product's Name</td>
+                    <td th:text="${product.description}">Description</td>
+                    <td th:text="${product.price}">Price</td>
+                </tr>
+                </tbody>                
+            </table>
+        </div>
+    </div>  
+        
     </div>
-    <br>
+
     <br>
     <div class="d-flex justify-content-between w-50 mx-auto mb-4">
-        <a href="#" th:href="@{/editCustomer(id=${customer.id})}">
+        <a href="#" th:href="@{/editSupplier(id=${supplier.id})}">
             <button type="button" class="btn btn btn-primary">Edit</button>
         </a>
-        <a href="#" th:href="@{/deleteCustomer(id=${customer.id})}">
+        <a href="#" th:href="@{/deleteSupplier(id=${supplier.id})}">
             <button type="button" class="btn btn btn-primary">Delete</button>
         </a>
-        <a href="/customers">
-            <button type="button" class="btn btn-primary">Back to Customers</button>
+        <a href="/suppliers">
+            <button type="button" class="btn btn-primary">Back to Supplier</button>
         </a>
     </div>
 </div>
@@ -115,4 +121,3 @@
 </style>
 
 </html>
-

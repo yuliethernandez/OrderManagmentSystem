@@ -2,11 +2,14 @@
 package com.we.OrderManagment.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 
 public class Customer {
@@ -28,16 +31,15 @@ public class Customer {
     @Size(max = 7, message="Zipcode must be fewer than 50 characters")
     private String zipcode;
     
-    @NotNull
+    @NotBlank(message = "Email must not be blank")
     @Email(message = "Please provide a valid email address")
     private String email;
     
-    @NotBlank(message = "Zipcode must not be blank")
-    @Size(max = 7, message="Zipcode must be fewer than 50 characters")
+    //@Digits(integer=9, fraction=0)
     private int gstNumber;
     
-    @NotBlank(message = "Zipcode must not be blank")
-    @Size(max = 7, message="Zipcode must be fewer than 50 characters")
+    @Size(max = 7, message="gstExtension must be fewer than 7 characters")
+    @NotBlank(message = "gstExtension must not be blank")
     private String gstExtension;
     
     @NotBlank(message = "Phone must not be blank")

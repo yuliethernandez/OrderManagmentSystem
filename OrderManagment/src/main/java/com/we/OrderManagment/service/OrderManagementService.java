@@ -40,5 +40,6 @@ public interface OrderManagementService {
     Supplier addSupplier(Supplier supplier);
     void updateSupplier(Supplier supplier);
     void deleteSupplierByID(int id);
+    List<Product> getProductsForSupplier(Supplier supplier);
     
 }

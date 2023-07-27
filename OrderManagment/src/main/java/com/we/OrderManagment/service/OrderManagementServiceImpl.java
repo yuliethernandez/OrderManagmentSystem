@@ -225,4 +225,9 @@ public class OrderManagementServiceImpl implements OrderManagementService{
         supplierDao.deleteSupplierByID(id);
     }
     
+    @Override
+    public List<Product> getProductsForSupplier(Supplier supplier) {
+        return supplierDao.getProductsForSupplier(supplier);
+    }
+    
 }

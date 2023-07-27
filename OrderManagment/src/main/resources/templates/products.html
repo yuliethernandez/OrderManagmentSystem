@@ -13,7 +13,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Order's Management System</a>
+      <a class="navbar-brand" href="/">Order's Management System</a>
     </div>
     <ul class="nav navbar-nav">      
       <li><a href="orders">Orders</a></li>
@@ -26,9 +26,36 @@
 </nav>
 
   
-<div class="container">
-  <h3>Order's Management System</h3>
-  <p>Description of the Order's Management System</p>
+<div class="container">        
+    <a href="addSupplier"><button type="button" class="btn btn-primary">
+            Add Product</button></a>
+    <div class="row m-4 border ">
+        <div class="col text-left m-3">
+            <br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Product's Name</th>
+                    <th>Price</th>
+                    <th>Email</th>
+                    <th>In stock</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product ${products}">
+                    <td th:text="${product.name}">Supplier's Name</td>
+                    <td th:text="${product.address}">Address</td>
+                    <td th:text="${product.email}">Email</td>
+                    <td><a href="#" th:href="@{/productDetails(id=${product.id})}">Details</a></td>
+                    <td><a href="#" th:href="@{/editProduct(id=${product.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteProduct(id=${product.id})}">Delete</a></td>
+                </tr>
+                </tbody>                
+            </table>
+        </div>
+    </div>  
 </div>
 
 <footer>

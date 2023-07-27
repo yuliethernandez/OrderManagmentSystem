@@ -1,7 +1,11 @@
 package com.we.OrderManagment.dao;
 
 import com.we.OrderManagment.dto.Customer;
+import com.we.OrderManagment.dto.Order;
+import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.mapper.CustomerMapper;
+import com.we.OrderManagment.mapper.OrderMapper;
+import com.we.OrderManagment.mapper.ProductMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -81,9 +85,45 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public void deleteCustomerByID(int id) {
+//        List<Order> list = getOrdersByCustomer(getCustomerByID(id));
+//        deleteOrderByID(id);
         
         final String DELETE_CUSTOMER_BY_ID = "DELETE FROM customer WHERE customerId = ?";
         jdbc.update(DELETE_CUSTOMER_BY_ID, id);
     }
+    
+    /*public List<Order> getOrdersByCustomer(Customer customer) {
+        try{
+            final String GET_ORDER_BY_CUSTOMER = "SELECT * FROM ordercustomer WHERE customerId = ?;";
+            List<Order> list = jdbc.query(GET_ORDER_BY_CUSTOMER, new OrderMapper(), customer.getId());
+                        
+            list.forEach(order -> {
+                    order.setProducts(getProductsForOrder(order));
+                });
+            
+            return list;
+        }
+        catch (DataAccessException ex){
+            return null;
+        }
+    }
+    private List<Product> getProductsForOrder(Order order) {  
+        final String sql = "SELECT p.* "
+                +"FROM product p "
+                +"INNER JOIN productorder po "
+                +"ON p.productId = po.productId "
+                +"WHERE orderId = ?";
+        return jdbc.query(sql, new ProductMapper(), order.getId());
+    }
+    public void deleteOrderByID(int id) {   
+        final String DELETE_PRODUCT_BY_ID = "DELETE FROM productorder WHERE orderId = ?";
+        jdbc.update(DELETE_PRODUCT_BY_ID, id);
+        
+        final String DELETE_INVOICE_BY_ID = "DELETE FROM invoice WHERE orderId = ?";
+        jdbc.update(DELETE_INVOICE_BY_ID, id);
+         
+        final String DELETE_ORDER_BY_ID = "DELETE FROM ordercustomer WHERE orderId = ?";
+        jdbc.update(DELETE_ORDER_BY_ID, id);
+    }*/
     
 }
