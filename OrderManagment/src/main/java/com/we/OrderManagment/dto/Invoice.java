@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Invoice {
     
-    private int invoiceId;
+    private int id;
     
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 //    @NotNull(message = "The date must not be empty")
@@ -45,8 +45,8 @@ public class Invoice {
     
     private Order order;
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getId() {
+        return id;
     }
 
     public LocalDate getShipDate() {
@@ -85,8 +85,8 @@ public class Invoice {
         return order;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setShipDate(LocalDate shipDate) {
@@ -128,7 +128,7 @@ public class Invoice {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + this.invoiceId;
+        hash = 83 * hash + this.id;
         hash = 83 * hash + Objects.hashCode(this.shipDate);
         hash = 83 * hash + Objects.hashCode(this.dueDate);
         hash = 83 * hash + Objects.hashCode(this.terms);
@@ -153,7 +153,7 @@ public class Invoice {
             return false;
         }
         final Invoice other = (Invoice) obj;
-        if (this.invoiceId != other.invoiceId) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.terms, other.terms)) {
@@ -185,7 +185,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceId=" + invoiceId + ", shipDate=" + shipDate + ", dueDate=" + dueDate + ", terms=" + terms + ", saleRepName=" + saleRepName + ", hstTax=" + hstTax + ", subtotal=" + subtotal + ", shipppingHandling=" + shipppingHandling + ", notes=" + notes + ", order=" + order + '}';
+        return "Invoice{" + "invoiceId=" + id + ", shipDate=" + shipDate + ", dueDate=" + dueDate + ", terms=" + terms + ", saleRepName=" + saleRepName + ", hstTax=" + hstTax + ", subtotal=" + subtotal + ", shipppingHandling=" + shipppingHandling + ", notes=" + notes + ", order=" + order + '}';
     }
     
     

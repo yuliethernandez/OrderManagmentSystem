@@ -18,12 +18,16 @@ public class Order {
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String details;
     
+    @NotNull(message = "The total must not be empty")
     private BigDecimal total;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "The date must not be empty")
     @Past(message = "The date must be in the past")
     private LocalDate date;
+    
+    @NotNull(message = "The quantity must not be empty")
+    private int quantity;
     
     private Customer customer;    
     private List<Product> products;
@@ -76,15 +80,29 @@ public class Order {
         this.products = products;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "id=" + id + ", details=" + details + ", total=" + total + ", date=" + date + ", quantity=" + quantity + ", customer=" + customer + ", products=" + products + '}';
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.details);
-        hash = 79 * hash + Objects.hashCode(this.total);
-        hash = 79 * hash + Objects.hashCode(this.date);
-        hash = 79 * hash + Objects.hashCode(this.customer);
-        hash = 79 * hash + Objects.hashCode(this.products);
+        int hash = 5;
+        hash = 61 * hash + this.id;
+        hash = 61 * hash + Objects.hashCode(this.details);
+        hash = 61 * hash + Objects.hashCode(this.total);
+        hash = 61 * hash + Objects.hashCode(this.date);
+        hash = 61 * hash + this.quantity;
+        hash = 61 * hash + Objects.hashCode(this.customer);
+        hash = 61 * hash + Objects.hashCode(this.products);
         return hash;
     }
 
@@ -103,6 +121,9 @@ public class Order {
         if (this.id != other.id) {
             return false;
         }
+        if (this.quantity != other.quantity) {
+            return false;
+        }
         if (!Objects.equals(this.details, other.details)) {
             return false;
         }
@@ -117,11 +138,7 @@ public class Order {
         }
         return Objects.equals(this.products, other.products);
     }
-
-    @Override
-    public String toString() {
-        return "Order{" + "id=" + id + ", details=" + details + ", total=" + total + ", date=" + date + ", customer=" + customer + ", products=" + products + '}';
-    }
+    
     
     
     

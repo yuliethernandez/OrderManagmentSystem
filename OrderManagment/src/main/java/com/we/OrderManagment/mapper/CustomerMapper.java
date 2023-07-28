@@ -12,7 +12,16 @@ public class CustomerMapper implements RowMapper<Customer>{
     @Override
     public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
         Customer customer = new Customer();
-        customer.
+        customer.setId(rs.getInt("customerId"));
+        customer.setName(rs.getString("name"));
+        customer.setAddress(rs.getString("address"));
+        customer.setCity(rs.getString("city"));
+        customer.setZipcode(rs.getString("zipcode"));
+        customer.setPhone(rs.getString("phoneNumber"));
+        customer.setEmail(rs.getString("email"));
+        customer.setGstNumber(rs.getInt("gstNumber"));
+        customer.setGstExtension(rs.getString("gstExtension"));
+        return customer;
     }
     
 }
