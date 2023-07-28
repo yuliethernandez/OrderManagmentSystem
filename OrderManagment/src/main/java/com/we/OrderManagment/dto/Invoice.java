@@ -26,7 +26,7 @@ public class Invoice {
     private LocalDate dueDate;
     
 //    @Size(max = 50, message="Name must be fewer than 50 characters")
-    private String terms;   
+    private String terms="Terms in the contract";   
     
 //    @NotBlank(message = "The name of the Sale representation must not be blank")
 //    @Size(max = 50, message="The name of the Sale representation must be fewer than 50 characters")

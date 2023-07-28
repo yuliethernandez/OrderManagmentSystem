@@ -25,24 +25,74 @@
   </div>
 </nav>
 
-  
 <div class="container">
-  <div class="col-12 m-1 text-center"
+    <div class="col-12 m-1 text-center"
         th:if="${!errors.isEmpty()}">
        <p class="alert alert-danger" th:each="error: ${errors}"
           th:text="${error.message}">Error message</p>
    </div>
-    <div class="row m-4 border border-dark">
+    <div class="row">
+        <hr>
+        <!-- left container -->
+        <div class="col-md-6"> 
+
+            <!--container for Contact List table -->
+            <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order: ${orders}">
+                    <td th:text="${order.id}">Order #</td>
+                    <td th:text="${order.customer.name}">Customer</td>
+                    <td th:text="${order.total}">Total</td>
+                    <td><a href="#" th:href="@{/orderDetails(id=${order.id})}">Details</a></td>
+                    <td><a href="#" th:href="@{/editOrder(id=${order.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteOrder(id=${order.id})}">Delete</a></td>
+                </tr>
+                </tbody>                
+            </table>
+            </div>
+        </div>
+        </div>
+        <!-- right container (New Contact form) -->
+        <div class="col-md-6"> 
+           <div class="row m-4 border border-dark">
             <div class="col text-center m-3">
                 <div class="text-center">
                     <h2>Add Order:</h2>
                 <br>
                 <div class="col-7 text-center m-auto">
                     <form action="addOrder" method="POST">
+                        
                         <div class="form-group row">
-                            <label for="customerId" class="col-3 col-form-label">
+                            <label for="saleRepName" class="col-md-4 control-label text-right">Sale Rep. Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="saleRepName"
+                                       id="saleRepName" class="form-control" />                                
+                            </div>                            
+                        </div> 
+                        <div class="form-group row">
+                            <label for="notes" class="col-md-4 control-label text-right">Notes:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="notes"
+                                       id="notes" class="form-control" />                                
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="customerId" class="col-md-4 control-label text-right">
                                 Customer:</label>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <select id="customer" name="customerId" class="form-control" >
                                     <option th:each="customer : ${customers}"
                                             th:value="${customer.id}"
@@ -50,21 +100,65 @@
                                         -- Select a Customer</option>
                                 </select>
                             </div>   
-                            
                         </div>  
+                        
+                        <div class="form-group row">
+                            <label for="productsId" class="col-md-4 control-label text-right">Suppliers:</label>
+                            <div class="col-md-6">
+                                <select id="products" name="productsId" class="form-control" multiple="multiple" >
+                                <option th:each="product: ${products}"
+                                        th:value="${product.id}"
+                                        th:text="${product.name}"
+                                        th:selected="${products.contains(product)}">
+                                  Suppliers</option>
+                              </select>
+                            </div>
+                        </div> 
+                        
+                        <!-- <div class="form-group row">
+                            <label for="products" class="col-md-4 col-form-label text-right">
+                                Products: </label>
+                            <div class="col-md-6">
+                                <select multiple id="products" name="productsId" class="form-control" >
+                                    <option th:each="product: ${products}"
+                                            th:value="${product.id}"
+                                            th:text="${product.name }">
+                                        Products</option>
+                                </select>
+                            </div>
+                        </div>  -->
+                        
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 control-label text-right">Description:</label>
+                            <div class="col-md-6">
+                                <textarea name="description" rows="5" cols="10"
+                                          id="description" class="form-control"/> </textarea>  
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="date" class="col-md-4 control-label text-right">
+                                Date:</label>
+                            <div class="col-md-6">
+                                <input type="date" name="date" id="date" class="form-control">  
+                                
+                            </div>
+                        </div> 
+                        
+                         <button type="submit" class="btn btn-primary">Add Order</button>
+                        <a href="/orders">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        
                     </form>
                 </div>
                 </div>
             </div>
     </div>
+        </div>
+    </div>
 </div>
-
-<footer>
-    <div class="footer">
-        <p>Footer</p>
-      </div>
-
-</footer>
+    
     
 </body>
 

@@ -13,7 +13,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Order's Management System</a>
+      <a class="navbar-brand" href="/">Order's Management System</a>
     </div>
     <ul class="nav navbar-nav">      
       <li><a href="orders">Orders</a></li>
@@ -29,6 +29,7 @@
 <div class="container">        
     <a href="addOrder"><button type="button" class="btn btn-primary">
             Add Order</button></a>
+    <hr>
     <div class="row m-4 border ">
         <div class="col text-left m-3">
             <br>
@@ -38,6 +39,7 @@
                     <th>Order #</th>
                     <th>Customer</th>
                     <th>Total</th>
+                    <th>Date</th>
                     <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -48,6 +50,7 @@
                     <td th:text="${order.id}">Order #</td>
                     <td th:text="${order.customer.name}">Customer</td>
                     <td th:text="${order.total}">Total</td>
+                    <td th:text="${order.date}">Date</td>
                     <td><a href="#" th:href="@{/orderDetails(id=${order.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editOrder(id=${order.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteOrder(id=${order.id})}">Delete</a></td>
