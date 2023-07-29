@@ -25,6 +25,8 @@ public class InvoiceController {
     public String getAllInvoices(Model model) {  
         List<Invoice> invoices = service.getAllInvoices();
         model.addAttribute("invoices", invoices);
+        
+        
                 
         return "invoices";
     }

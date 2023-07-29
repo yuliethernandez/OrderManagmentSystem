@@ -8,6 +8,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+  <!-- Bootstrap CSS
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+ -->
 </head>
 <body>
 
@@ -26,30 +29,118 @@
   </div>
 </nav>
 
-  
-<div class="container">  
-    <!-- <div class="row form-group">
-        <Span><h2>All Orders</h2></Span>
-        <a href="addOrder">
-            <button type="button" class="btn btn-primary">Add Order</button></a>
-        <hr>
-    </div> -->
-    <div class="container mt-4">
-        <h2>All Orders</h2>
-        <p>Here you will find all the orders of the System:</p>
-        <div class="btn-group">
-            <div class="row form-group">
-                <a href="addOrder">
-                    <button type="button" class="btn btn-primary">Add Order</button></a>
-                <a href="getOrdersByCustomer">
-                    <button type="button" class="btn btn-primary">Order/Customer</button></a>
-                <a href="getOrdersByDate">
-                    <button type="button" class="btn btn-primary">Order/Date</button></a>
+
+     
+<div class="container">
+    <h2>All Orders</h2>
+    <p>Here you will find all the orders of the System:</p>
+    <!-- <div class="row">
+        <div class="col-sm-4">
+            <a href="addProduct"><button type="button" class="btn btn-primary">
+                Add Product</button></a> 
+        </div>
+        <div class="col-sm-4">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Filters <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="getOrdersByCustomer">Order/Customer</a></li>
+                  <li><a href="getOrdersByDate">Order/Date</a></li>
+                </ul>
             </div>
-            
+        </div>
+        <div class="col-sm-4">
+            .col-sm-4
+        </div>
+    </div> -->
+     <div class="row">
+        <div class="col-sm-2">
+            <a href="addOrder"><button type="button" class="btn btn-primary">
+                Add Product</button></a>
+        </div>
+         <div class="col-sm-2">
+            <a href="orders"><button type="button" class="btn btn-primary">
+                Reset Settings</button></a>
+        </div>
+         
+        <form action="ordersByDate" method="GET">
+            <div class="col-sm-2 text-right">            
+                <button type="button" class="btn btn-primary ">
+                    Order/Date</button>
+            </div>
+            <div class="col-sm-2">
+                <input type="date" name="date" id="date" class="form-control">
+            </div>
+        </form>
+         
+        <form action="ordersByCustomer" method="GET">
+            <div class="col-sm-2 text-right">
+                <button type="submit" class="btn btn-primary">
+                    Order/Customer</button>
+            </div>
+            <div class="col-sm-2">
+                <select id="customer" name="customerId" class="form-control" >
+                    <option th:each="customer : ${customers}"
+                            th:value="${customer.id}"
+                            th:text="${customer.name}">
+                        -- Select a Customer</option>
+                </select>
+
+            </div>
+        </form>
+    </div>
+    <!-- <div class="btn-group">
+        <div class="row form-group">
+            <div class="col-md-4">
+                <input type="date" name="date" id="date" class="form-control">   
+            </div>
+            <a href="getOrdersByDate">
+                <button type="button" class="btn btn-primary">Order/Date</button>                    
+            </a>
+            <button type="button" class="btn btn-primary">Add Order</button>
+
+            <a href="getOrdersByCustomer">
+                <button type="button" class="btn btn-primary text-left">Order/Customer</button></a>
+            </a>   
+
+            <a href="orders">
+                <button type="button" class="btn btn-danger">Reset Settings</button> 
+            </a>
             
         </div>
-      </div>
+
+    </div>
+</div> 
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary" th:href="@{addOrder}">Add Order</button>
+  <button type="button" class="btn btn-primary">Reset Settings</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Filters <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="getOrdersByCustomer">Order/Customer</a></li>
+      <li><a href="getOrdersByDate">Order/Date</a></li>
+    </ul>
+  </div>
+</div>
+    
+    <a href="addProduct"><button type="button" class="btn btn-primary">
+            Add Product</button></a>    
+    
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Filters <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="getOrdersByCustomer">Order/Customer</a></li>
+          <li><a href="getOrdersByDate">Order/Date</a></li>
+        </ul>
+    </div>-->
+    
+    
+    <!-- <a href="orders"><button type="button" class="btn btn-primary">
+            Reset Settings</button></a> 
+    <  --> 
     <hr>
     <div class="row m-4 border ">
         <div class="col text-left m-3">

@@ -6,6 +6,7 @@ import com.we.OrderManagment.dto.Invoice;
 import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.dto.Supplier;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -29,6 +30,8 @@ public interface OrderManagementService {
     Order addOrder(Order order);
     void updateOrder(Order order);
     void deleteOrderByID(int id);
+    List<Order> getOrdersByDate(LocalDate date);
+    List<Order> getOrdersByCustomer(Customer customer);
     
     Product getProductByID(int id);
     List<Product> getAllProducts();

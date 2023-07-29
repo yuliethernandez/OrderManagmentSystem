@@ -11,6 +11,7 @@ import com.we.OrderManagment.dto.Invoice;
 import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.dto.Supplier;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -155,6 +156,16 @@ public class OrderManagementServiceImpl implements OrderManagementService{
         }
         orderDao.deleteOrderByID(id);
     }
+    
+    @Override
+    public List<Order> getOrdersByDate(LocalDate date) {
+        return orderDao.getOrdersByDate(date);
+    }
+
+    @Override
+    public List<Order> getOrdersByCustomer(Customer customer) {
+        return orderDao.getOrdersByCustomer(customer);
+    }
 
     @Override
     public Product getProductByID(int id) {
@@ -235,6 +246,8 @@ public class OrderManagementServiceImpl implements OrderManagementService{
     public List<Product> getProductsForSupplier(Supplier supplier) {
         return supplierDao.getProductsForSupplier(supplier);
     }
+
+    
 
     
     

@@ -36,7 +36,10 @@ public class OrderController {
     @GetMapping("orders")
     public String getAllOrders(Model model) {  
         List<Order> orders = service.getAllOrders();
-        model.addAttribute("orders", orders);        
+        model.addAttribute("orders", orders);   
+        
+        List<Customer> customers = service.getAllCustomers();
+        model.addAttribute("customers", customers);
                 
         return "orders";
     }
@@ -87,9 +90,12 @@ public class OrderController {
         if(productsId != null){            
             for(String id : productsId) {
                 Product prod = service.getProductByID(Integer.parseInt(id));
-                prod.setSuppliers(new ArrayList<>());
+                prod.setSuppliers(null);
                 products.add(prod);
             }
+//            products.forEach(p -> {
+//                p.setSuppliers(null);
+//            });
             order.setProducts(products);            
         }else{            
             return "addOrder";
@@ -155,6 +161,39 @@ public class OrderController {
                 
         return "redirect:/addOrder";
 
+    }
+    
+    @GetMapping("ordersByDate")
+    public String getOrdersByDate(Model model, HttpServletRequest request){        
+        LocalDate ldt;        
+        if(!request.getParameter("date").equals("")){
+            ldt = LocalDate.parse(request.getParameter("date"));
+        }
+        else{
+            List<Order> orders = service.getAllOrders();
+            model.addAttribute("orders", orders);
+            return "orders";
+        }
+        
+        List<Order> orders = service.getOrdersByDate(ldt);
+        model.addAttribute("orders", orders);
+        
+        return "orders";
+    }
+    
+    @GetMapping("ordersByCustomer")
+    public String getOrdersByCustomer(Model model, HttpServletRequest request){   
+        int idCustomer = Integer.parseInt(request.getParameter("customerId"));
+        Customer customer;
+        customer = service.getCustomerByID(idCustomer);
+        
+        List<Order> ordersByCustomer = service.getOrdersByCustomer(customer);
+        model.addAttribute("orders", ordersByCustomer); 
+        
+        List<Customer> customers = service.getAllCustomers();
+        model.addAttribute("customers", customers);
+        
+        return "orders";
     }
     
     @GetMapping("editOrder")

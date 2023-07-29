@@ -29,116 +29,114 @@
   <div class="row m-4 border border-dark">
         
         <div class="col text-center m-3">
-            <div class="text-center">
-                <h2>Edit Order #<span th:utext="${order.id}"></span></label></h2>
-                <br>
-                <div class="col-7 text-center m-auto">
-                    <form th:action="@{editOrder(id=${order.id})}" method="POST">      
-                        <div class="form-group row">
-                            <label for="saleRepName" class="col-md-4 control-label text-right">Sale Rep. Name:</label>
-                            <div class="col-md-6">
-                                <input type="text" name="saleRepName"
-                                       id="saleRepName" class="form-control" 
-                                       th:value="${invoice.saleRepName}"/>
-                                <div th:if="${#fields.hasErrors('invoice.saleRepName')}">
-                                    <p th:each="error: ${#fields.errors('invoice.saleRepName')}"
-                                       class="alert alert-danger" th:text="${error}">
-                                        Bad Sale Rep. Name</p>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="form-group row">
-                            <label for="notes" class="col-md-4 control-label text-right">Notes:</label>
-                            <div class="col-md-6">
-                                <textarea name="notes" rows="5" cols="10"
-                                       id="notes" class="form-control" 
-                                       th:value="${invoice.notes}"/></textarea>
-                                <div th:if="${#fields.hasErrors('invoice.notes')}">
-                                    <p th:each="error: ${#fields.errors('invoice.notes')}"
-                                       class="alert alert-danger" th:text="${error}">
-                                        Bad notes</p>
-                                </div>
-                            </div>                            
-                        </div>
-                        
-                        <div class="form-group row">
-                            <label for="details" class="col-md-4 control-label text-right">Details:</label>
-                            <div class="col-md-6">
-                                <textarea name="details" rows="5" cols="10"
-                                       id="details" class="form-control" 
-                                       th:value="${order.details}"/></textarea>
-                                <div th:if="${#fields.hasErrors('order.details')}">
-                                    <p th:each="error: ${#fields.errors('order.details')}"
-                                       class="alert alert-danger" th:text="${error}">
-                                        Bad details</p>
-                                </div>
-                            </div>                            
-                        </div>
-                        
-                        <div class="form-group row">
-                            <label for="customer" class="col-md-4 control-label text-right">
-                                Customer:</label>
-                            <div class="col-md-6">
-                                <select id="hero" name="customer" class="form-control" >
-                                    <option th:each="customer : ${customers}"
-                                            th:value="${customer.id}"
-                                            th:text="${customer.name}">
-                                        -- Select a Customer</option>
-                                </select>
-                            </div>   
-                            
-                        </div>
-                        
-                        <div class="form-group row">
-                            
-                            <label for="date" class="col-md-4 control-label text-right">
-                                Date:</label>
-                                <div class="col-md-6">
-                                    <input type="date" name="date" id="date" class="form-control"
-                                       th:value="${order.date}">  
-                                    <!-- <div th:if="${#fields.hasErrors('order.date')}">
-                                    <p th:each="error: ${#fields.errors('order.date')}"
-                                       class="alert alert-danger" th:text="${error}">
-                                        Bad Date</p>
-                                    </div>-->
-                            </div> 
-                        </div>  
-                        
-                        <div class="form-group row">
-                            <label for="productsId" class="col-md-4 control-label text-right">Products:</label>
-                            <div class="col-md-6">
-                                <select id="productsList" name="productsId" class="form-control" multiple="multiple" >
-                                <option th:each="product: ${productsList}"
-                                        th:value="${product.id}"
-                                        th:text="${product.name}"
-                                        th:selected="${order.products.contains(productsList)}">
-                                  Products</option>
-                              </select>
-                                <!-- <select  id="suppliers" name="suppliersId" class="form-control" multiple="multiple" required="" 
-                                    th:field="*{suppliers}" >
-                                    <option th:each="supplier: ${suppliers}"
-                                            th:value="${supplier.id}"
-                                            th:text="${supplier.name}">
-
-                                    </option>
-                                </select> -->
+            <h2>Edit Order #<span th:utext="${order.id}"></span></label></h2>
+            <br>
+            <div class="col-7 text-center m-auto">
+                <form th:action="@{editOrder(id=${order.id})}" method="POST">      
+                    <div class="form-group row">
+                        <label for="saleRepName" class="col-md-4 control-label text-right">Sale Rep. Name:</label>
+                        <div class="col-md-6">
+                            <input type="text" name="saleRepName"
+                                   id="saleRepName" class="form-control" 
+                                   th:value="${invoice.saleRepName}"/>
+                            <div th:if="${#fields.hasErrors('invoice.saleRepName')}">
+                                <p th:each="error: ${#fields.errors('invoice.saleRepName')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Bad Sale Rep. Name</p>
                             </div>
-                        </div>  
-                        
-                        
-                        
+                        </div>                            
+                    </div>
+                    <div class="form-group row">
+                        <label for="notes" class="col-md-4 control-label text-right">Notes:</label>
+                        <div class="col-md-6">
+                            <textarea name="notes" rows="5" cols="10"
+                                   id="notes" class="form-control" 
+                                   th:value="${invoice.notes}"/></textarea>
+                            <div th:if="${#fields.hasErrors('invoice.notes')}">
+                                <p th:each="error: ${#fields.errors('invoice.notes')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Bad notes</p>
+                            </div>
+                        </div>                            
+                    </div>
 
-                                  
-                        <br>
-                        <input type="hidden" name="id" th:value="${order.id}"/>
-                        <button type="submit" class="btn btn-primary">Edit Order</button>
-                        <a href="/orders">
-                            <button type="button" class="btn btn-danger">Cancel</button>
-                        </a>
-                        <br>
-                      
-                    </form> 
-                </div>
+                    <div class="form-group row">
+                        <label for="details" class="col-md-4 control-label text-right">Details:</label>
+                        <div class="col-md-6">
+                            <textarea name="details" rows="5" cols="10"
+                                   id="details" class="form-control" 
+                                   th:value="${order.details}"/></textarea>
+                            <div th:if="${#fields.hasErrors('order.details')}">
+                                <p th:each="error: ${#fields.errors('order.details')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Bad details</p>
+                            </div>
+                        </div>                            
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="customer" class="col-md-4 control-label text-right">
+                            Customer:</label>
+                        <div class="col-md-6">
+                            <select id="hero" name="customer" class="form-control" >
+                                <option th:each="customer : ${customers}"
+                                        th:value="${customer.id}"
+                                        th:text="${customer.name}">
+                                    -- Select a Customer</option>
+                            </select>
+                        </div>   
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <label for="date" class="col-md-4 control-label text-right">
+                            Date:</label>
+                            <div class="col-md-6">
+                                <input type="date" name="date" id="date" class="form-control"
+                                   th:value="${order.date}">  
+                                <!-- <div th:if="${#fields.hasErrors('order.date')}">
+                                <p th:each="error: ${#fields.errors('order.date')}"
+                                   class="alert alert-danger" th:text="${error}">
+                                    Bad Date</p>
+                                </div>-->
+                        </div> 
+                    </div>  
+
+                    <div class="form-group row">
+                        <label for="productsId" class="col-md-4 control-label text-right">Products:</label>
+                        <div class="col-md-6">
+                            <select id="productsList" name="productsId" class="form-control" multiple="multiple" >
+                            <option th:each="product: ${productsList}"
+                                    th:value="${product.id}"
+                                    th:text="${product.name}"
+                                    th:selected="${order.products.contains(productsList)}">
+                              Products</option>
+                          </select>
+                            <!-- <select  id="suppliers" name="suppliersId" class="form-control" multiple="multiple" required="" 
+                                th:field="*{suppliers}" >
+                                <option th:each="supplier: ${suppliers}"
+                                        th:value="${supplier.id}"
+                                        th:text="${supplier.name}">
+
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>  
+
+
+
+
+
+                    <br>
+                    <input type="hidden" name="id" th:value="${order.id}"/>
+                    <button type="submit" class="btn btn-primary">Edit Order</button>
+                    <a href="/orders">
+                        <button type="button" class="btn btn-danger">Cancel</button>
+                    </a>
+                    <br>
+
+                </form> 
             </div>
         </div>
     </div>
