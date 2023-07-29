@@ -35,6 +35,7 @@
                 <tr>
                     <th>Invoice #</th>
                     <th>Due Date</th>
+                    <th>Ship Date</th>
                     <th>Sale Rep. Name</th>
                     <th>Details</th>
                     <th>Edit</th>
@@ -45,6 +46,7 @@
                 <tr th:each="invoice: ${invoices}">
                     <td th:text="${invoice.id}">Invoice #</td>
                     <td th:text="${invoice.dueDate}">Due Date</td>
+                    <td th:text="${invoice.shipDate}">Ship Date</td>
                     <td th:text="${invoice.saleRepName}">Sale Rep. Name</td>
                     <td><a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editInvoice(id=${invoice.id})}">Edit</a></td>

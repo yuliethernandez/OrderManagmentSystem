@@ -95,7 +95,7 @@
                         <div class="form-group row">
                             <label for="email" class="col-md-4 control-label text-right">Email:</label>
                             <div class="col-md-6">
-                                <input type="text" name="email"
+                                <input type="email" name="email"
                                        id="email" class="form-control" 
                                        th:value="${customer.email}"/>
                                 <div th:if="${#fields.hasErrors('customer.email')}">

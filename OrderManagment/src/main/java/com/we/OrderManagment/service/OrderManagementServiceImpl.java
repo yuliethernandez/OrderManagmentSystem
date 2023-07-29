@@ -112,6 +112,11 @@ public class OrderManagementServiceImpl implements OrderManagementService{
         }
         invoiceDao.deleteInvoiceByID(id);
     }
+    
+    @Override
+    public Invoice getInvoiceForOrder(Order order) {
+        return invoiceDao.getInvoiceForOrder(order);
+    }
 
     @Override
     public Order getOrderByID(int id) {
@@ -230,5 +235,7 @@ public class OrderManagementServiceImpl implements OrderManagementService{
     public List<Product> getProductsForSupplier(Supplier supplier) {
         return supplierDao.getProductsForSupplier(supplier);
     }
+
+    
     
 }

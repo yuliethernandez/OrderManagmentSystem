@@ -18,12 +18,12 @@ public class Order {
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String details;
     
-    @NotNull(message = "The total must not be empty")
+    //@NotNull(message = "The total must not be empty")
     private BigDecimal total;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "The date must not be empty")
-    //@Past(message = "The date must be in the past")
+    @Past(message = "The date must be in the past")
     private LocalDate date;
     
     //@NotNull(message = "The quantity must not be empty")

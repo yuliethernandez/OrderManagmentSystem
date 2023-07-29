@@ -54,7 +54,8 @@ public class InvoiceDaoImpl implements InvoiceDao{
     @Override
     public Invoice addInvoice(Invoice invoice) {
         final String sql = "INSERT INTO invoice "
-                + "(shipDate, dueDate, terms, saleRepName, hstTax, subtotal, shippingHandling, notes, orderId) " 
+                + "(shipDate, dueDate, terms, saleRepName, hstTax, "
+                + "subtotal, shippingHandling, notes, orderId) " 
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try{
            jdbc.update(sql, 
@@ -122,6 +123,12 @@ try{
         catch (DataAccessException ex){
             return null;
         }
+    }
+    @Override
+    public Invoice getInvoiceForOrder(Order order) {
+        final String sql = "select * from invoice where orderId = ?";
+        return jdbc.queryForObject(sql, new InvoiceMapper(), order.getId());
+        
     }
     //object
     private Customer getCustomerForOrder(Order order) {

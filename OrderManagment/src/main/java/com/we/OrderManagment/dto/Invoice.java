@@ -39,7 +39,7 @@ public class Invoice {
     private BigDecimal subtotal;
     
 //    @NotNull(message = "The shippping Handling must not be empty")
-    private BigDecimal shipppingHandling;
+    private BigDecimal shipppingHandling = new BigDecimal("3.99");
     
     private String notes;    
     

@@ -22,6 +22,7 @@ public interface OrderManagementService {
     Invoice addInvoice(Invoice invoice);
     void updateInvoice(Invoice invoice);
     void deleteInvoiceByID(int id);
+    Invoice getInvoiceForOrder(Order order) ;
     
     Order getOrderByID(int id);
     List<Order> getAllOrders();
