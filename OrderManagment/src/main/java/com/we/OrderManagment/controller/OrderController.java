@@ -5,11 +5,9 @@ import com.we.OrderManagment.dto.Customer;
 import com.we.OrderManagment.dto.Invoice;
 import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.dto.Product;
-import com.we.OrderManagment.dto.Supplier;
 import com.we.OrderManagment.service.OrderManagementService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -178,6 +176,10 @@ public class OrderController {
         List<Order> orders = service.getOrdersByDate(ldt);
         model.addAttribute("orders", orders);
         
+        List<Customer> customers = service.getAllCustomers();
+        model.addAttribute("customers", customers);
+        model.addAttribute("date", ldt);
+        
         return "orders";
     }
     
@@ -192,14 +194,13 @@ public class OrderController {
         
         List<Customer> customers = service.getAllCustomers();
         model.addAttribute("customers", customers);
+        //model.addAttribute("customerName", customer.getName());
         
         return "orders";
     }
     
     @GetMapping("editOrder")
-    public String getEditOrderById(Integer id, Model model) {
-        
-        
+    public String getEditOrderById(Integer id, Model model) {        
         Order order;
         if(id != null){
             order = service.getOrderByID(id);
@@ -213,58 +214,57 @@ public class OrderController {
         
         Invoice invoice = service.getInvoiceForOrder(order);
         model.addAttribute("invoice", invoice);
-//        String saleRepName = "";
-//        model.addAttribute("saleRepName", saleRepName);
-//        String notes = "";
-//        model.addAttribute("notes", notes);
         
-        List<Product> productsList = service.getAllProducts();        
-        model.addAttribute("productsList", productsList);
-        
-        /*
-        Product product;
-        if(id != null){
-            product = service.getProductByID(id);
-        }else{
-            return "products";
-        }
-        List<Supplier> suppliers = service.getAllSuppliers();
-        
-        suppliers.forEach(supplier -> {
-            supplier.setProducts(null);
+        List<Product> productsList = service.getAllProducts(); 
+        productsList.forEach(p -> {
+            p.setSuppliers(null);
         });
-        
-        model.addAttribute("suppliers", suppliers);
-        model.addAttribute("product", product);*/
+        model.addAttribute("productsList", productsList);
         
         return "editOrder";
         
     }
     
-//    @PostMapping("editOrder")
-//    public String editOrder(@Valid Order order, BindingResult result, 
-//            HttpServletRequest request, Model model) {
-//
-//        String[] suppliersIds = request.getParameterValues("suppliersId");
-//        List<Supplier> suppliers = new ArrayList<>();
-//        
-//        if(suppliersIds != null){
-//            for(String supId: suppliersIds) {
-//                suppliers.add(service.getSupplierByID(Integer.parseInt(supId)));
-//            }
-//        }
-//        
-//        product.setSuppliers(suppliers);
-//        
-//        if (result.hasErrors()) {
-//            Product prod = service.getProductByID(product.getId());
-//            model.addAttribute("product", prod);
-//                        
-//            return "editProduct";
-//        }
-//        
-//        service.updateProduct(product);
-//
-//        return "redirect:/products";
-//    }
+    @PostMapping("editOrder")
+    public String editOrder(@Valid Order order, BindingResult result, 
+            HttpServletRequest request, Model model) {
+
+        String[] productsId = request.getParameterValues("productsId");
+        List<Product> products = new ArrayList<>();
+        
+        if(productsId != null){
+            for(String productId: productsId) {
+                products.add(service.getProductByID(Integer.parseInt(productId)));
+            }
+        }        
+        order.setProducts(products);   
+        model.addAttribute("productsList", products);
+        
+        LocalDate ldt;
+        String date = request.getParameter("date");
+        if(!request.getParameter("date").equals("")){
+            ldt = LocalDate.parse(request.getParameter("date"));
+        }else{        
+            Order o = service.getOrderByID(order.getId());
+            model.addAttribute("order", o);
+            //model.addAttribute("productsList", products);
+            Invoice invoice = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice", invoice);
+        
+            return "editOrder";
+        }
+        
+        if (result.hasErrors()) {
+            Order orderDao = service.getOrderByID(order.getId());
+            model.addAttribute("order", orderDao);
+            //model.addAttribute("productsList", products);
+            Invoice invoice = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice", invoice);
+            return "editOrder";
+        }
+        
+        service.updateOrder(order);
+
+        return "redirect:/orders";
+    }
 }

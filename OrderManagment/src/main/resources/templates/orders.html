@@ -65,11 +65,12 @@
          
         <form action="ordersByDate" method="GET">
             <div class="col-sm-2 text-right">            
-                <button type="button" class="btn btn-primary ">
+                <button type="submit" class="btn btn-primary ">
                     Order/Date</button>
             </div>
             <div class="col-sm-2">
-                <input type="date" name="date" id="date" class="form-control">
+                <input type="date" name="date" id="date" class="form-control"
+                       th:value="${date}">
             </div>
         </form>
          
@@ -83,6 +84,7 @@
                     <option th:each="customer : ${customers}"
                             th:value="${customer.id}"
                             th:text="${customer.name}">
+                            <!-- th:selected="${customerName}" -->
                         -- Select a Customer</option>
                 </select>
 

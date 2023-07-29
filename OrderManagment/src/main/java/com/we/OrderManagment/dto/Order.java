@@ -21,7 +21,7 @@ public class Order {
     //@NotNull(message = "The total must not be empty")
     private BigDecimal total;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "The date must not be empty")
     @Past(message = "The date must be in the past")
     private LocalDate date;
