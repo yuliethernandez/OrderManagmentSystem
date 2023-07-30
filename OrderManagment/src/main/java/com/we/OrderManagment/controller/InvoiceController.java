@@ -2,6 +2,7 @@
 package com.we.OrderManagment.controller;
 
 import com.we.OrderManagment.dto.Invoice;
+import com.we.OrderManagment.dto.Order;
 import com.we.OrderManagment.dto.Product;
 import com.we.OrderManagment.service.OrderManagementService;
 import java.util.HashSet;
@@ -29,6 +30,18 @@ public class InvoiceController {
         
                 
         return "invoices";
+    }
+    
+    @GetMapping("invoiceDetails")
+    public String getDetailsInvoice(Integer id, Model model){
+        Invoice invoice = service.getInvoiceByID(id);
+        model.addAttribute("invoice", invoice);
+        
+        int idOrderOfInvoice = invoice.getOrder().getId();
+        Order orderOfInvoice = service.getOrderByID(idOrderOfInvoice);
+        model.addAttribute("order", orderOfInvoice);
+        
+        return "invoiceDetails";
     }
     
     @GetMapping("deleteInvoice")

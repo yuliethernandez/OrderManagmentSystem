@@ -26,107 +26,121 @@
 </nav>
 
   
-<div class="container pt-5">
+<div class="container">
     <h3>Details of the Invoice #<span th:utext="${invoice.id}"></span></h3>
           <hr>
-    <div class="row m-4 border border-dark">
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Number: </strong>
-                <span th:utext="${invoice.id}">display number</span></div>
+          <div class="row">
+              
+            <div class="col-md-6 m-3"> 
+                <div class="row">
+                      
+                      <div class="row">
+                          <div class="col-6 text-left"><strong>Number: </strong>
+                              <span th:utext="${invoice.id}">display number</span></div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-6 text-left"><strong>Ship Date:</strong>
+                              <span th:text="${invoice.shipDate}">display Ship Date</span>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-6 text-left"><strong>Due Date:</strong>
+                              <span th:text="${invoice.dueDate}">display Due Date:</span>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-6 text-left"><strong>Sale Rep. Name: </strong>
+                              <span th:text="${invoice.saleRepName}">display Sale Rep. Name:</span>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                      <div class="col-6 text-left"><strong>Customer: </strong>
+                          <span th:text="${order.customer.name}">display customer</span>
+                      </div>
+                  </div>
+                  <br>
+                </div>
+            </div>    
+            <div class="col-md-6 m-3"> 
+                 <div class="row">
+                  <div class="row">
+                      <div class="col-6 text-left"><strong>HST Tax: </strong>
+                          <span th:text="${'$' + invoice.hstTax}">display HST Tax</span>
+                      </div>
+                   </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-6 text-left"><strong>Subtotal: </strong>
+                          <span th:text="${'$' + invoice.subtotal}">display Subtotal:</span>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-6 text-left"><strong>Total: </strong>
+                          <span th:text="${'$' + order.total}">display Total</span>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-6 text-left"><strong>Shippping Handling: </strong>
+                          <span th:text="${'$' + invoice.shipppingHandling}">display Shippping Handling:</span>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col-6 text-left"><strong>Notes in the Invoice: </strong>
+                          <span th:text="${invoice.notes}">display Notes in the Invoice:</span>
+                      </div>
+                  </div>
+                  <br>
+                  
+                  </div>
+            </div> 
+    
         </div>
-        <br>
+          
         <div class="row">
-            <div class="col-6 text-left"><strong>Ship Date:</strong>
-                <span th:text="${invoice.shipDate}">display Ship Date</span>
+            
+            <div class="col text-left m-3">
+                 <h3>Products:</h3>
+                <br>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Product's Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Details</th>
+                        <th>Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product: ${order.products}">
+                        <td th:text="${product.name}">Product's Name</td>
+                        <td th:text="${product.description}">Description</td>
+                        <td th:text="${ '$' + product.price}">Price</td>
+                        <td><a href="#" th:href="@{/productDetails(id=${product.id})}">Details</a></td>
+                        <td><a href="#" th:href="@{/editProduct(id=${product.id})}">Edit</a></td>
+                    </tr>
+                    </tbody>                
+                </table>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Due Date:</strong>
-                <span th:text="${invoice.dueDate}">display Due Date:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Sale Rep. Name: </strong>
-                <span th:text="${invoice.saleRepName}">display Sale Rep. Name:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>HST Tax: </strong>
-                <span th:text="${invoice.hstTax}">display HST Tax</span>
-            </div>
-        </div>
-        <br>
+        </div>  
         
-        <div class="row">
-            <div class="col-6 text-left"><strong>Subtotal: </strong>
-                <span th:text="${invoice.subtotal}">display Details:</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Total: </strong>
-                <span th:text="${invoice.hstTax}">display Total</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Shippping Handling: </strong>
-                <span th:text="${invoice.hstTax}">display Details:</span>
-            </div>
-        </div>
-        <br>
-        
-        
-        
-        <h3>Products supplies by <span th:utext="${supplier.name}"></span>:</h3>
-        <div class="row m-4 border ">
-        <div class="col text-left m-3">
-            <br>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Product's Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="product: ${supplier.products}">
-                    <td th:text="${product.name}">Product's Name</td>
-                    <td th:text="${product.description}">Description</td>
-                    <td th:text="${product.price}">Price</td>
-                </tr>
-                </tbody>                
-            </table>
-        </div>
-    </div>  
-        
-    </div>
 
     <br>
-    <div class="d-flex justify-content-between w-50 mx-auto mb-4">
-        <a href="#" th:href="@{/editSupplier(id=${supplier.id})}">
-            <button type="button" class="btn btn btn-primary">Edit</button>
-        </a>
-        <a href="#" th:href="@{/deleteSupplier(id=${supplier.id})}">
-            <button type="button" class="btn btn btn-primary">Delete</button>
-        </a>
-        <a href="/suppliers">
-            <button type="button" class="btn btn-primary">Back to Supplier</button>
+    <div class="d-flex justify-content-between w-50 mx-auto mb-4">        
+        <a href="/invoices">
+            <button type="button" class="btn btn-primary">Back to all the Invoices</button>
         </a>
     </div>
 </div>
 
-<footer>
-    <div class="footer">
-        <p>Footer</p>
-      </div>
 
-</footer>
     
 </body>
 

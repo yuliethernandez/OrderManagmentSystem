@@ -60,6 +60,9 @@ public class OrderController {
         Order order = service.getOrderByID(id);
               
         model.addAttribute("order", order);
+        
+        Invoice invoice = service.getInvoiceForOrder(order);
+        model.addAttribute("invoice",invoice);
         return "orderDetails";
     }
     
@@ -82,6 +85,8 @@ public class OrderController {
     @PostMapping("addOrder")
     public String addOrder(Model model, HttpServletRequest request) {   
         Order order = new Order();
+        Invoice invoice = new Invoice();
+        
         String[] productsId = request.getParameterValues("productsId");
         List<Product> products = new ArrayList<>();
         
@@ -115,20 +120,22 @@ public class OrderController {
         
         BigDecimal total= BigDecimal.ZERO;
         BigDecimal shipppingHandling = new BigDecimal("3.99");
-        BigDecimal subtotal = null;        
+        BigDecimal subtotal = BigDecimal.ZERO;;        
         int quantity = 0;
         
         for(Product p: products){
             quantity ++;
             //Sum of the prices of all the products
-            subtotal = total.add(p.getPrice());            
+            subtotal = subtotal.add(p.getPrice());            
         }
+        invoice.setSubtotal(subtotal);
         //HST Taxes
         final double percentage = 9.97;
         //Total = subtotal + shipppingHandling (3.99)
         total = subtotal.add(shipppingHandling);
         //HST taxes = 9.97% de total
         BigDecimal taxesOrder = total.multiply(BigDecimal.valueOf((double)percentage/100));
+        invoice.setHstTax(taxesOrder);
         //Total = subtotal + shipppingHandling (3.99) + HST taxes(9.97%)
         total = total.add(taxesOrder);
             
@@ -143,14 +150,12 @@ public class OrderController {
                 return "redirect:/orders";
             }
             Order orderDao = service.addOrder(order);  
-            Invoice invoice = new Invoice();
+            
             invoice.setDueDate(ldt);
             invoice.setShipDate(ldt.plusDays(7));
             invoice.setNotes(request.getParameter("notes"));
             invoice.setSaleRepName(request.getParameter("saleRepName"));            
-            invoice.setOrder(orderDao);            
-            invoice.setSubtotal(subtotal);
-            invoice.setHstTax(taxesOrder);
+            invoice.setOrder(orderDao); 
             
             service.addInvoice(invoice);
             
@@ -229,16 +234,46 @@ public class OrderController {
     public String editOrder(@Valid Order order, BindingResult result, 
             HttpServletRequest request, Model model) {
 
-        String[] productsId = request.getParameterValues("productsId");
+        Invoice invoiceUpdate = service.getInvoiceForOrder(order);
+        
+        String[] productsId = request.getParameterValues("products");
         List<Product> products = new ArrayList<>();
         
         if(productsId != null){
             for(String productId: productsId) {
                 products.add(service.getProductByID(Integer.parseInt(productId)));
             }
-        }        
+        }   
         order.setProducts(products);   
         model.addAttribute("productsList", products);
+        
+        BigDecimal total;
+        BigDecimal shipppingHandling = new BigDecimal("3.99");
+        BigDecimal subtotal = BigDecimal.ZERO;      
+        int quantity = 0;
+        
+        for(Product p: products){
+            quantity ++;
+            //Sum of the prices of all the products
+            subtotal = subtotal.add(p.getPrice());            
+        }
+        invoiceUpdate.setSubtotal(subtotal);
+        //HST Taxes
+        final double percentage = 9.97;
+        //Total = subtotal + shipppingHandling (3.99)
+        total = subtotal.add(shipppingHandling);
+        //HST taxes = 9.97% de total
+        BigDecimal taxesOrder = total.multiply(BigDecimal.valueOf((double)percentage/100));
+        invoiceUpdate.setHstTax(taxesOrder);        
+       //Total = subtotal + shipppingHandling (3.99) + HST taxes(9.97%)
+        total = total.add(taxesOrder);
+        order.setQuantity(quantity);
+        order.setTotal(total);        
+        
+        int idCustomerSelected = Integer.parseInt(request.getParameter("customerId"));
+        Customer customer = service.getCustomerByID(idCustomerSelected);
+        order.setCustomer(customer);
+        //model.addAttribute("customer", customer);
         
         LocalDate ldt;
         String date = request.getParameter("date");
@@ -254,14 +289,29 @@ public class OrderController {
             return "editOrder";
         }
         
-        if (result.hasErrors()) {
+        invoiceUpdate.setDueDate(ldt);
+        invoiceUpdate.setShipDate(ldt.plusDays(7));
+        invoiceUpdate.setNotes(request.getParameter("notes"));
+        invoiceUpdate.setSaleRepName(request.getParameter("saleRepName")); 
+        service.updateInvoice(invoiceUpdate);
+        
+        /*if (result.hasErrors()) {
             Order orderDao = service.getOrderByID(order.getId());
             model.addAttribute("order", orderDao);
+            
+            List<Customer> allCustomers = service.getAllCustomers();
+            model.addAttribute("customers", allCustomers);
+            
+            List<Product> allProducts;
+            allProducts= service.getAllProducts();
+            model.addAttribute("productsList", allProducts);
+            
             //model.addAttribute("productsList", products);
             Invoice invoice = service.getInvoiceForOrder(order);
             model.addAttribute("invoice", invoice);
             return "editOrder";
-        }
+        }*/
+        
         
         service.updateOrder(order);
 

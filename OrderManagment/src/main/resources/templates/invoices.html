@@ -25,7 +25,9 @@
   </div>
 </nav>
   
-<div class="container">        
+<div class="container"> 
+    <h2>All Invoices</h2>
+    <p>Here you will find all the invoices of the System:</p>
     <hr>
     <div class="row m-4 border ">
         <div class="col text-left m-3">
@@ -50,8 +52,8 @@
                     <td th:text="${invoice.dueDate}">Due Date</td>
                     <td th:text="${invoice.shipDate}">Ship Date</td>
                     <td th:text="${invoice.saleRepName}">Sale Rep. Name</td>
-                    <td th:text="${invoice.order.total}">Total</td>
-                    <td th:text="${invoice.hstTax}">HST Taxes</td>
+                    <td th:text="${'$' + invoice.order.total}">Total</td>
+                    <td th:text="${'$' + invoice.hstTax}">HST Taxes</td>
                     <td th:text="${invoice.order.id}">Order #</td>
                     <td><a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editInvoice(id=${invoice.id})}">Print</a></td>

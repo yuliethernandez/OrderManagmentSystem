@@ -102,7 +102,7 @@ public class OrderManagementServiceImpl implements OrderManagementService{
         if (inv == null){
             throw new RuntimeException("Could not find the Invoice with the id " + invoice.getId() +".");
         }
-        invoiceDao.addInvoice(invoice);
+        invoiceDao.updateInvoice(invoice);
     }
 
     @Override

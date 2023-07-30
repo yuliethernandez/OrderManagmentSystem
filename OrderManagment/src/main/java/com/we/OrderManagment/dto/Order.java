@@ -26,7 +26,6 @@ public class Order {
     @Past(message = "The date must be in the past")
     private LocalDate date;
     
-    //@NotNull(message = "The quantity must not be empty")
     private int quantity;
     
     private Customer customer;    

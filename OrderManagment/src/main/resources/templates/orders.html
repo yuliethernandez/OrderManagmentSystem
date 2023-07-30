@@ -56,7 +56,7 @@
      <div class="row">
         <div class="col-sm-2">
             <a href="addOrder"><button type="button" class="btn btn-primary">
-                Add Product</button></a>
+                Add Order</button></a>
         </div>
          <div class="col-sm-2">
             <a href="orders"><button type="button" class="btn btn-primary">
@@ -163,7 +163,7 @@
                 <tr th:each="order: ${orders}">
                     <td th:text="${order.id}">Order #</td>
                     <td th:text="${order.customer.name}">Customer</td>
-                    <td th:text="${order.total}">Total</td>
+                    <td th:text="${'$' + order.total}">Total</td>
                     <td th:text="${order.date}">Date</td>
                     <td><a href="#" th:href="@{/orderDetails(id=${order.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editOrder(id=${order.id})}">Edit</a></td>

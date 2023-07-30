@@ -28,41 +28,58 @@
   
 <div class="container">
     <h3>Details of  the Order #<span th:utext="${order.id}"></span></h3>
-    <hr>     
-    <div class="row m-4 border border-dark">
-        <br>
-        <div class="row">
+    <hr>  
+    
+    <div class="row">
+              
+        <div class="col-md-6 m-3"> 
+            <div class="row">
             <div class="col-6 text-left"><strong>Order #: </strong>
                 <span th:utext="${order.id}">display number</span></div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Total:</strong>
-                <span th:text="${order.total}">display address</span>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Date:</strong>
-                <span th:text="${order.date}">display Date:</span>
+            <br>
+            <div class="row">
+                <div class="col-6 text-left"><strong>Total:</strong> $
+                    <span th:text="${order.total}">display Total</span>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 text-left"><strong>Quantity: </strong>
-                <span th:text="${order.quantity}">display quantity</span>
+            <br>
+            <div class="row">
+                <div class="col-6 text-left"><strong>Date:</strong>
+                    <span th:text="${order.date}">display Date:</span>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
+            <br>
+            <div class="row">
+                <div class="col-6 text-left"><strong>Quantity: </strong>
+                    <span th:text="${order.quantity}">display quantity</span>
+                </div>
+            </div>
+        </div>      
+        <div class="col-md-6 m-3"> 
+            <div class="row">
             <div class="col-6 text-left"><strong>Customer's Name: </strong>
                 <span th:text="${order.customer.name}">display Customer's Name</span>
             </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6 text-left"><strong>Sale Rep. Name: </strong>
+                    <span th:text="${invoice.saleRepName}">display Sale Rep. Name:</span>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6 text-left"><strong>Notes: </strong>
+                    <span th:text="${invoice.notes}">display Notes:</span>
+                </div>
+            </div>
         </div>
-        <br>
-        
-        
     </div>
+    
+    
+    
+    
 
     <h3>Products:</h3>
         <div class="row m-4 border ">
@@ -82,7 +99,7 @@
                     <tr th:each="product: ${order.products}">
                         <td th:text="${product.name}">Product's Name</td>
                         <td th:text="${product.description}">Description</td>
-                        <td th:text="${product.price}">Price</td>
+                        <td th:text="${'$' + product.price}">Price</td>
                         <td><a href="#" th:href="@{/productDetails(id=${product.id})}">Details</a></td>
                         <td><a href="#" th:href="@{/editProduct(id=${product.id})}">Edit</a></td>
                     </tr>

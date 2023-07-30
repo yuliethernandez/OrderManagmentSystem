@@ -75,10 +75,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="customer" class="col-md-4 control-label text-right">
+                        <label for="customerId" class="col-md-4 control-label text-right">
                             Customer:</label>
                         <div class="col-md-6">
-                            <select id="hero" name="customer" class="form-control" >
+                            <select id="customer" name="customerId" class="form-control" >
                                 <option th:each="customer : ${customers}"
                                         th:value="${customer.id}"
                                         th:text="${customer.name}">
@@ -104,9 +104,9 @@
                     </div>  
 
                     <div class="form-group row">
-                        <label for="productsId" class="col-md-4 control-label text-right">Products:</label>
+                        <label for="products" class="col-md-4 control-label text-right">Products:</label>
                         <div class="col-md-6">
-                            <select id="productsList" name="productsId" class="form-control" multiple="multiple" >
+                            <select id="products" name="products" class="form-control" multiple="multiple" >
                             <option th:each="product: ${productsList}"
                                     th:value="${product.id}"
                                     th:text="${product.name}"

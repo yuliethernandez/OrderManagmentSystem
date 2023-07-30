@@ -117,6 +117,9 @@ public class OrderDaoImpl implements OrderDao{
         final String sql = "INSERT INTO productorder (productId, orderId) VALUES "
                 + "(?, ?)";
         order.getProducts().forEach(product -> {
+            product.setSuppliers(null);
+        });
+        order.getProducts().forEach(product -> {
             jdbc.update(sql,
                 product.getId(),
                 order.getId());
@@ -227,10 +230,5 @@ public class OrderDaoImpl implements OrderDao{
             return null;
         }
     }
-
-   
-
-    
-
-    
+ 
 }

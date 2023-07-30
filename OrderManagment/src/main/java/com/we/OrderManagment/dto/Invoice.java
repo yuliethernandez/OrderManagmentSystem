@@ -4,43 +4,18 @@ package com.we.OrderManagment.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class Invoice {
     
-    private int id;
-    
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    @NotNull(message = "The date must not be empty")
-//    @Past(message = "The date must be in the past")
+    private int id;    
     private LocalDate shipDate;
-    
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    @NotNull(message = "The date must not be empty")
-//    @Past(message = "The date must be in the past")
     private LocalDate dueDate;
-    
-//    @Size(max = 50, message="Name must be fewer than 50 characters")
     private String terms="Terms in the contract";   
-    
-//    @NotBlank(message = "The name of the Sale representation must not be blank")
-//    @Size(max = 50, message="The name of the Sale representation must be fewer than 50 characters")
     private String saleRepName;   
-    
-//    @NotNull(message = "The HST Tax must not be empty")
     private BigDecimal hstTax;  
-    
-//    @NotNull(message = "The subtotal must not be empty")
     private BigDecimal subtotal;
-    
-//    @NotNull(message = "The shippping Handling must not be empty")
-    private BigDecimal shipppingHandling = new BigDecimal("3.99");
-    
+    private BigDecimal shipppingHandling = new BigDecimal("3.99");    
     private String notes;    
     
     private Order order;
