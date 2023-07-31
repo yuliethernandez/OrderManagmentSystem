@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order's Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Order's Management System</a>
+    </div>
+    <ul class="nav navbar-nav">      
+      <li><a href="orders">Orders</a></li>
+      <li><a href="invoices">Invoices</a></li>
+      <li><a href="products">Products</a></li>
+      <li><a href="customers">Customers</a></li>
+      <li><a href="suppliers">Suppliers</a></li>
+    </ul>
+  </div>
+</nav>
+
+  
+<div class="container">
+  <div class="row m-4 border border-dark">
+        
+        <div class="col text-center m-3">
+            <div class="text-center">
+                <h2>Edit Customer: <span th:text="${customer.name}"></span></label></h2>
+                <br>
+                <div class="col-7 text-center m-auto">
+                    <form th:action="@{editCustomer(id=${customer.id})}" method="POST">                         
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 control-label text-right">Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="name"
+                                       id="name" class="form-control" 
+                                       th:value="${customer.name}"/>
+                                <div th:if="${#fields.hasErrors('customer.name')}">
+                                    <p th:each="error: ${#fields.errors('customer.name')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's Name</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 control-label text-right">Address:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="address"
+                                       id="address" class="form-control" 
+                                       th:value="${customer.address}"/>
+                                <div th:if="${#fields.hasErrors('customer.address')}">
+                                    <p th:each="error: ${#fields.errors('customer.address')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's Address</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        
+                        <div class="form-group row">
+                            <label for="city" class="col-md-4 control-label text-right">City:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="city"
+                                       id="city" class="form-control" 
+                                       th:value="${customer.city}"/>
+                                <div th:if="${#fields.hasErrors('customer.city')}">
+                                    <p th:each="error: ${#fields.errors('customer.city')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's City</p>
+                                </div>
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="zipcode" class="col-md-4 control-label text-right">Zip-code:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="zipcode"
+                                       id="zipcode" class="form-control" 
+                                       th:value="${customer.zipcode}"/>
+                                <div th:if="${#fields.hasErrors('customer.zipcode')}">
+                                    <p th:each="error: ${#fields.errors('customer.zipcode')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's Zip-code</p>
+                                </div>
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 control-label text-right">Email:</label>
+                            <div class="col-md-6">
+                                <input type="email" name="email"
+                                       id="email" class="form-control" 
+                                       th:value="${customer.email}"/>
+                                <div th:if="${#fields.hasErrors('customer.email')}">
+                                    <p th:each="error: ${#fields.errors('customer.email')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's Email</p>
+                                </div>
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="gstNumber" class="col-md-4 control-label text-right">GST Number:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="gstNumber"
+                                       id="gstNumber" class="form-control" 
+                                       th:value="${customer.gstNumber}"/>
+                                <div th:if="${#fields.hasErrors('customer.gstNumber')}">
+                                    <p th:each="error: ${#fields.errors('customer.gstNumber')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's GST Number</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                       
+                        <div class="form-group row">
+                            <label for="gstExtension" class="col-md-4 control-label text-right">GST Extension:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="gstExtension"
+                                       id="gstExtension" class="form-control" 
+                                       th:value="${customer.gstExtension}"/>
+                                <div th:if="${#fields.hasErrors('customer.gstExtension')}">
+                                    <p th:each="error: ${#fields.errors('customer.gstExtension')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's GST Extension</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 control-label text-right">Phone Number:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="phone"
+                                       id="phone" class="form-control" 
+                                       th:value="${customer.phone}"/>
+                                <div th:if="${#fields.hasErrors('customer.phone')}">
+                                    <p th:each="error: ${#fields.errors('customer.phone')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad customer's Phone Number</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        <br>
+                        
+                        <button type="submit" class="btn btn-primary">Edit Customer</button>
+                        <a href="/customers">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        <br>
+                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+        <p>Footer</p>
+      </div>
+
+</footer>
+    
+</body>
+
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: black;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+</style>
+
+</html>

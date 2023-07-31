@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order's Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Order's Management System</a>
+    </div>
+    <ul class="nav navbar-nav">      
+      <li><a href="orders">Orders</a></li>
+      <li><a href="invoices">Invoices</a></li>
+      <li><a href="products">Products</a></li>
+      <li><a href="customers">Customers</a></li>
+      <li><a href="suppliers">Suppliers</a></li>
+    </ul>
+  </div>
+</nav>
+
+  
+<div class="container">  
+    <div class="col-12 m-1 text-center"
+        th:if="${!errors.isEmpty()}">
+       <p class="alert alert-danger" th:each="error: ${errors}"
+          th:text="${error.message}">Error message</p>
+   </div>
+    
+    <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <div class="text-center">
+                    <h2>Add Supplier:</h2>
+                <br>
+                <div class="col-7 text-center m-auto">
+                    <form action="addSupplier" method="POST">
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 control-label text-right">Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="name"
+                                       id="name" class="form-control" />                                
+                            </div>                            
+                        </div>  
+                        
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 control-label text-right">Address:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="address"
+                                       id="address" class="form-control"/>                                
+                            </div>                            
+                        </div>        
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 control-label text-right">Email:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="email"
+                                       id="email" class="form-control"/>                                
+                            </div>                            
+                        </div> 
+                        <div class="form-group row">
+                            <label for="phonenumber" class="col-md-4 control-label text-right">Phone Number:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="phonenumber"
+                                       id="phonenumber" class="form-control" />                                
+                            </div>                            
+                        </div>
+                        <div class="form-group row">
+                            <label for="details" class="col-md-4 control-label text-right">Details:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="details"
+                                       id="details" class="form-control"/>                                
+                            </div>                            
+                        </div> 
+                        
+                        <div class="form-group row">
+                            <label for="products" class="col-md-4 col-form-label text-right">
+                                Products: </label>
+                            <div class="col-md-6">
+                                <select multiple id="products" name="productsId" class="form-control" >
+                                    <option th:each="product: ${products}"
+                                            th:value="${product.id}"
+                                            th:text="${product.name }">
+                                        Products</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        
+                        <button type="submit" class="btn btn-primary">Add Supplier</button>
+                        <a href="/suppliers">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+    
+</body>
+
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: black;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+</style>
+
+</html>
+
+

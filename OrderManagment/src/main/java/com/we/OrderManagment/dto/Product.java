@@ -4,16 +4,20 @@ package com.we.OrderManagment.dto;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
+//@Setter
+//@Getter
+//@NoArgsConstructor
 public class Product {
     
-    private int productId;
+    private int id;
     
-    @NotBlank(message = "Description must not be blank")
+//    @NotBlank(message = "Description must not be blank")
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String description;
     
@@ -21,22 +25,21 @@ public class Product {
     @Size(max = 50, message="Name must be fewer than 50 characters")
     private String name;
     
-    @NotBlank(message = "Quantity must not be blank")
-    private int quantity;
+    //@Digits(integer=9, fraction=0)
+    //@Min (value=1, message = "The product must have an existence" )
+    @NotNull(message = "Quantity must not be blank")    
+    private int quantity=0;
     
-    @NotNull(message = "The tax information must not be empty")
-    private boolean isTax;
+//    @NotNull(message = "The tax information must not be empty")
+    private boolean isTax = true;
     
-    @Size(max = 50, message="Name must be fewer than 50 characters")
-    private String details;
-    
-    @NotNull(message = "The price must not be empty")
+    @NotNull(message = "The product must have a price")
     private BigDecimal price;
     
     private List<Supplier> suppliers;
 
-    public int getProductId() {
-        return productId;
+    public int getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -51,13 +54,10 @@ public class Product {
         return quantity;
     }
 
-    public boolean isTax() {
+    public boolean getTax() {
         return isTax;
     }
 
-    public String getDetails() {
-        return details;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -67,8 +67,8 @@ public class Product {
         return suppliers;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDescription(String description) {
@@ -87,10 +87,6 @@ public class Product {
         this.isTax = isTax;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
@@ -102,12 +98,11 @@ public class Product {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 31 * hash + this.productId;
+        hash = 31 * hash + this.id;
         hash = 31 * hash + Objects.hashCode(this.description);
         hash = 31 * hash + Objects.hashCode(this.name);
         hash = 31 * hash + Objects.hashCode(this.quantity);
         hash = 31 * hash + (this.isTax ? 1 : 0);
-        hash = 31 * hash + Objects.hashCode(this.details);
         hash = 31 * hash + Objects.hashCode(this.price);
         hash = 31 * hash + Objects.hashCode(this.suppliers);
         return hash;
@@ -125,7 +120,7 @@ public class Product {
             return false;
         }
         final Product other = (Product) obj;
-        if (this.productId != other.productId) {
+        if (this.id != other.id) {
             return false;
         }
         if (this.isTax != other.isTax) {
@@ -140,9 +135,6 @@ public class Product {
         if (!Objects.equals(this.quantity, other.quantity)) {
             return false;
         }
-        if (!Objects.equals(this.details, other.details)) {
-            return false;
-        }
         if (!Objects.equals(this.price, other.price)) {
             return false;
         }
@@ -151,7 +143,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", details=" + details + ", price=" + price + ", suppliers=" + suppliers + '}';
+        return "Product{" + "productId=" + id + ", description=" + description + ", name=" + name + ", quantity=" + quantity + ", tax=" + isTax + ", price=" + price + ", suppliers=" + suppliers + '}';
     }
     
     

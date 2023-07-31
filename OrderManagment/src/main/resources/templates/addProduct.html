@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order's Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Order's Management System</a>
+    </div>
+    <ul class="nav navbar-nav">      
+      <li><a href="orders">Orders</a></li>
+      <li><a href="invoices">Invoices</a></li>
+      <li><a href="products">Products</a></li>
+      <li><a href="customers">Customers</a></li>
+      <li><a href="suppliers">Suppliers</a></li>
+    </ul>
+  </div>
+</nav>
+
+  
+<div class="container">
+  <div class="col-12 m-1 text-center"
+        th:if="${!errors.isEmpty()}">
+       <p class="alert alert-danger" th:each="error: ${errors}"
+          th:text="${error.message}">Error message</p>
+   </div>
+    <hr>
+    <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <div class="text-center">
+                    <h2>Add Product:</h2>
+                <br>
+                <div class="col-7 text-center m-auto">
+                    <form action="addProduct" method="POST" th:object="${product}">
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 control-label text-right">Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="name"
+                                       id="name" class="form-control" />                                
+                            </div>                            
+                        </div>  
+                        
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 control-label text-right">Description:</label>
+                            <div class="col-md-6">
+                                <textarea name="description" rows="5" cols="10"
+                                          id="description" class="form-control"/> </textarea>  
+                            </div>                            
+                        </div>        
+                        
+                        <div class="form-group row">
+                            <label for="quantity" class="col-md-4 control-label text-right">Quantity:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="quantity"
+                                       id="quantity" class="form-control"/>                                
+                            </div>                            
+                        </div> 
+                        <div class="form-group row">
+                            <label for="price" class="col-md-4 control-label text-right">Price:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="price"
+                                       id="price" class="form-control"/>                                
+                            </div>                            
+                        </div> 
+                        
+                        
+                        
+                       <div class="form-group row">
+                            <label for="suppliersId" class="col-md-4 control-label text-right">Suppliers:</label>
+                            <div class="col-md-6">
+                                <select id="suppliers" name="suppliersId" class="form-control" multiple="multiple" >
+                                <option th:each="supplier: ${suppliers}"
+                                        th:value="${supplier.id}"
+                                        th:text="${supplier.name}"
+                                        th:selected="${suppliers.contains(supplier)}">
+                                  Suppliers</option>
+                              </select>
+                            </div>
+                        </div>   
+                            
+                        </div>
+                        <!--<div class="form-group">
+                        
+                        <label>Taxes:</label>
+                        <input type="checkbox" th:field="*{isTax}"/>
+                        
+                        
+                        <div class="custom-control custom-radio custom-control-inline">
+                            
+                            <label>Taxes:</label>
+                            <input type="radio" th:field="*{isTax}" value="true" />HST Taxes
+                            <input type="radio" th:field="*{isTax}" value="flase" />No Taxes      
+                            
+                            
+                            <input type="radio" id="option1" name="option1" 
+                                   class="custom-control-input" 
+                                   th:value="true" 
+                                   th:text="${isTax}"                                   >
+                            <label class="custom-control-label" for="option1">HST Taxes</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="option2" name="option2" 
+                                   class="custom-control-input"  >
+                            <label class="custom-control-label" for="option2">No Taxes</label>
+                        </div>
+                        
+                        </div>
+                        th:value="false" th:field="*{isTax}"
+                        <div class="form-group row">
+                            <fieldset class="border border-dark">
+                                <label for="quantity" class="col-md-4 control-label text-right">Taxes:</label>
+                                <div class="col-md-6">
+                                    
+                                    <input type="radio" name="tax" id="tax" value="true" checked="checked" 
+                                           th:field="*{isTax}">                                 
+                                    <label for="tax">HST Tax</label>
+                                
+                                    <input type="radio" name="tax" id="tax" value="false" th:field="*{isTax}">
+                                    <label for="tax">No Tax</label>
+                                 </div> 
+                            </fieldset>
+                            <label for="price" class="col-md-4 control-label text-right">Price:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="price"
+                                       id="price" class="form-control" />                                
+                            </div>                            
+                        </div> 
+                        
+                     -->
+                        
+                        <!--<div class="form-group row">
+                            <label for="products" class="col-md-4 col-form-label text-right">
+                                Suppliers: </label>
+                            <div class="col-md-6">
+                                <select multiple id="products" name="productsId" class="form-control" >
+                                    <option th:each="product: ${products}"
+                                            th:value="${product.id}"
+                                            th:text="${product.name }">
+                                        Suppliers</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        
+                        <br>
+                        
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                        <a href="/products">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+</body>
+
+
+</html>

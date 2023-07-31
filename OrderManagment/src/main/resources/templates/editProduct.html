@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order's Management System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Order's Management System</a>
+    </div>
+    <ul class="nav navbar-nav">      
+      <li><a href="orders">Orders</a></li>
+      <li><a href="invoices">Invoices</a></li>
+      <li><a href="products">Products</a></li>
+      <li><a href="customers">Customers</a></li>
+      <li><a href="suppliers">Suppliers</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row m-4 border border-dark">
+        
+        <div class="col text-center m-3">
+            <div class="text-center">
+                <h2>Edit Product <span th:text="${product.name}"></span></label></h2>
+                <br>
+                <div class="col-7 text-center m-auto">
+                    <form th:action="@{editProduct(id=${product.id})}" method="POST">                         
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 control-label text-right">Name:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="name"
+                                       id="name" class="form-control" 
+                                       th:value="${product.name}"/>
+                                <div th:if="${#fields.hasErrors('product.name')}">
+                                    <p th:each="error: ${#fields.errors('product.name')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad product's Name</p>
+                                </div>
+                            </div>                            
+                        </div>    
+                        
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 control-label text-right">Description:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="description"
+                                       id="description" class="form-control" 
+                                       th:value="${product.description}"/>
+                                <div th:if="${#fields.hasErrors('product.description')}">
+                                    <p th:each="error: ${#fields.errors('product.description')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad product's Description</p>
+                                </div>
+                            </div>                            
+                        </div>            
+                        
+                        <div class="form-group row">
+                            <label for="quantity" class="col-md-4 control-label text-right">In Stock:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="quantity"
+                                       id="quantity" class="form-control" 
+                                       th:value="${product.quantity}"/>
+                                <div th:if="${#fields.hasErrors('product.quantity')}">
+                                    <p th:each="error: ${#fields.errors('product.quantity')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad product's quantity</p>
+                                </div>
+                            </div>                            
+                        </div>    
+                        <div class="form-group row">
+                            <label for="price" class="col-md-4 control-label text-right">Price:</label>
+                            <div class="col-md-6">
+                                <input type="text" name="price"
+                                       id="price" class="form-control" 
+                                       th:value="${product.price}"/>
+                                <div th:if="${#fields.hasErrors('product.price')}">
+                                    <p th:each="error: ${#fields.errors('product.price')}"
+                                       class="alert alert-danger" th:text="${error}">
+                                        Bad product's Price</p>
+                                </div>
+                            </div>                            
+                        </div>
+                        
+                        
+                        <div class="form-group row">
+                            <label for="suppliersId" class="col-md-4 control-label text-right">Suppliers:</label>
+                            <div class="col-md-6">
+                                <select id="suppliers" name="suppliersId" class="form-control" multiple="multiple" >
+                                <option th:each="supplier: ${suppliers}"
+                                        th:value="${supplier.id}"
+                                        th:text="${supplier.name}"
+                                        th:selected="${product.suppliers.contains(supplier)}">
+                                  Suppliers</option>
+                              </select>
+                                <!-- <select  id="suppliers" name="suppliersId" class="form-control" multiple="multiple" required="" 
+                                    th:field="*{suppliers}" >
+                                    <option th:each="supplier: ${suppliers}"
+                                            th:value="${supplier.id}"
+                                            th:text="${supplier.name}">
+
+                                    </option>
+                                </select> -->
+                            </div>
+                        </div>   
+
+                                  
+                        <br>
+                        <input type="hidden" name="id" th:value="${product.id}"/>
+                        <button type="submit" class="btn btn-primary">Edit Product</button>
+                        <a href="/products">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                        <br>
+                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+</body>
+
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: black;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+</style>
+
+</html>

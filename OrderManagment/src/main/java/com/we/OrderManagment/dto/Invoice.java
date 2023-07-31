@@ -4,49 +4,30 @@ package com.we.OrderManagment.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class Invoice {
     
-    private int invoiceId;
-    
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    @NotNull(message = "The date must not be empty")
-//    @Past(message = "The date must be in the past")
+    private int id;    
     private LocalDate shipDate;
-    
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    @NotNull(message = "The date must not be empty")
-//    @Past(message = "The date must be in the past")
     private LocalDate dueDate;
+    private String terms="Terms in the contract"; 
     
-//    @Size(max = 50, message="Name must be fewer than 50 characters")
-    private String terms;   
-    
-//    @NotBlank(message = "The name of the Sale representation must not be blank")
-//    @Size(max = 50, message="The name of the Sale representation must be fewer than 50 characters")
+    @NotNull(message = "The total must not be empty")
+    @Size(max = 255, message="Description must be fewer than 255 characters")
     private String saleRepName;   
     
-//    @NotNull(message = "The HST Tax must not be empty")
     private BigDecimal hstTax;  
-    
-//    @NotNull(message = "The subtotal must not be empty")
     private BigDecimal subtotal;
-    
-//    @NotNull(message = "The shippping Handling must not be empty")
-    private BigDecimal shipppingHandling;
-    
+    private BigDecimal shipppingHandling = new BigDecimal("3.99");    
     private String notes;    
     
     private Order order;
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getId() {
+        return id;
     }
 
     public LocalDate getShipDate() {
@@ -85,8 +66,8 @@ public class Invoice {
         return order;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setShipDate(LocalDate shipDate) {
@@ -128,7 +109,7 @@ public class Invoice {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + this.invoiceId;
+        hash = 83 * hash + this.id;
         hash = 83 * hash + Objects.hashCode(this.shipDate);
         hash = 83 * hash + Objects.hashCode(this.dueDate);
         hash = 83 * hash + Objects.hashCode(this.terms);
@@ -153,7 +134,7 @@ public class Invoice {
             return false;
         }
         final Invoice other = (Invoice) obj;
-        if (this.invoiceId != other.invoiceId) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.terms, other.terms)) {
@@ -185,7 +166,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceId=" + invoiceId + ", shipDate=" + shipDate + ", dueDate=" + dueDate + ", terms=" + terms + ", saleRepName=" + saleRepName + ", hstTax=" + hstTax + ", subtotal=" + subtotal + ", shipppingHandling=" + shipppingHandling + ", notes=" + notes + ", order=" + order + '}';
+        return "Invoice{" + "invoiceId=" + id + ", shipDate=" + shipDate + ", dueDate=" + dueDate + ", terms=" + terms + ", saleRepName=" + saleRepName + ", hstTax=" + hstTax + ", subtotal=" + subtotal + ", shipppingHandling=" + shipppingHandling + ", notes=" + notes + ", order=" + order + '}';
     }
     
     
