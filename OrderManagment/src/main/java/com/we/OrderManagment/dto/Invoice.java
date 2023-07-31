@@ -18,6 +18,7 @@ public class Invoice {
     @NotNull(message = "The total must not be empty")
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String saleRepName;   
+    
     private BigDecimal hstTax;  
     private BigDecimal subtotal;
     private BigDecimal shipppingHandling = new BigDecimal("3.99");    

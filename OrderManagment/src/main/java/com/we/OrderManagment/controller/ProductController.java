@@ -89,7 +89,19 @@ public class ProductController {
         
         product.setSuppliers(suppliers);
         
+        String price = request.getParameter("price");
+        if(!price.isBlank() && price.length() >= 1 && isDouble(price)){
+            product.setPrice(new BigDecimal(price));
+        }
+        
         if (result.hasErrors()) {
+            List<Supplier> suppliersList = service.getAllSuppliers();        
+            suppliersList.forEach(supplier -> {
+                supplier.setProducts(null);
+            });
+
+            model.addAttribute("suppliers", suppliersList);
+        
             Product prod = service.getProductByID(product.getId());
             model.addAttribute("product", prod);
                         
@@ -132,9 +144,23 @@ public class ProductController {
         }
         product.setName(request.getParameter("name"));
         product.setDescription(request.getParameter("description"));   
-        product.setQuantity(Integer.parseInt(request.getParameter("quantity")));
         
-        product.setPrice(new BigDecimal(request.getParameter("price")));
+        String quantity = request.getParameter("quantity");
+        if(!quantity.isBlank() && quantity.length() >= 1 && isNumber(quantity)){
+            product.setQuantity(Integer.parseInt(quantity));
+        }else{
+            product.setQuantity(0);
+        }
+        //product.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        
+        String price = request.getParameter("price");
+        if(!price.isBlank() && price.length() >= 1 && isDouble(price)){
+            product.setPrice(new BigDecimal(price));
+        }
+//         else{
+//            product.setPrice(null);
+//        }
+        //product.setPrice(new BigDecimal(request.getParameter("price")));
 
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(product);
@@ -151,5 +177,42 @@ public class ProductController {
 
     }
     
+    private boolean isNumber(String gstNumber){
+        if (gstNumber == null) {
+            return false;
+        }
+        int length = gstNumber.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (gstNumber.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = gstNumber.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+
+    }
     
+    private boolean isDouble(String number) {
+        Double value = null;
+        try {
+            value = Double.parseDouble(number);
+            if(value == 0){
+                return false;
+            }
+            return true;
+        }
+        catch(NumberFormatException e) {
+            return false;
+        }
+    }
 }

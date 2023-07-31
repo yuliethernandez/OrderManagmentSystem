@@ -6,7 +6,7 @@ import com.we.OrderManagment.dto.Supplier;
 import java.util.List;
 
 
-public interface SupplierDao {
+public interface SupplierDao{
     Supplier getSupplierByID(int id);
     List<Supplier> getAllSuppliers();
     Supplier addSupplier(Supplier supplier);

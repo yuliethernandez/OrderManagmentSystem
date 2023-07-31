@@ -38,6 +38,7 @@ public interface OrderManagementService {
     Product addProduct(Product product);
     void updateProduct(Product product);
     void deleteProductByID(int id);
+    List<Product> getAllProductsInExistence();
     
     Supplier getSupplierByID(int id);
     List<Supplier> getAllSuppliers();

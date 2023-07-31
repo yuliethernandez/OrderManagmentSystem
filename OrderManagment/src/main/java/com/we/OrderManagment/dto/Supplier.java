@@ -21,7 +21,7 @@ public class Supplier {
     private String address;
     
     @NotBlank(message = "Phone must not be blank")
-    @Size(max = 10, message="Phone must be fewer than 10 characters")
+    @Size(max = 12, message="Phone must be fewer than 12 characters")
     //@Pattern(regexp = "^(\\d{3}-\\d{3}-\\d{4}|\\d+)$", message = "Phone must be in the format XXX-XXX-XXXX, where X represents a number")
     private String phonenumber;
     

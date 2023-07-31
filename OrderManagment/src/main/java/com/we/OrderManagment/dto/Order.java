@@ -23,7 +23,7 @@ public class Order {
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "The date must not be empty")
-    @Past(message = "The date must be in the past")
+    @Past(message = "Not valid Date")
     private LocalDate date;
     
     private int quantity;

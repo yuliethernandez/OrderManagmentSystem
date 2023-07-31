@@ -57,13 +57,17 @@ public class OrderController {
     
     @GetMapping("orderDetails")
     public String courseOrder(Integer id, Model model) {
-        Order order = service.getOrderByID(id);
-              
-        model.addAttribute("order", order);
-        
-        Invoice invoice = service.getInvoiceForOrder(order);
-        model.addAttribute("invoice",invoice);
-        return "orderDetails";
+        try{
+            Order order = service.getOrderByID(id);              
+            model.addAttribute("order", order);
+
+            Invoice invoice = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice",invoice);
+            return "orderDetails";
+        }
+        catch(Exception e){
+            return "orders";
+        }
     }
     
     @GetMapping("addOrder")
@@ -78,6 +82,7 @@ public class OrderController {
         model.addAttribute("customers", customers);
         model.addAttribute("products", products);
         model.addAttribute("orders", orders);
+        
         model.addAttribute("errors", violations);
         return "addOrder";
     }
@@ -96,17 +101,25 @@ public class OrderController {
                 prod.setSuppliers(null);
                 products.add(prod);
             }
-//            products.forEach(p -> {
-//                p.setSuppliers(null);
-//            });
             order.setProducts(products);            
         }else{            
             return "addOrder";
         }
         LocalDate ldt;
+        String date = request.getParameter("date");
         if(!request.getParameter("date").equals("")){
             ldt = LocalDate.parse(request.getParameter("date"));
-        }else{            
+        }else{        
+            
+            List<Customer> customers = service.getAllCustomers();        
+            model.addAttribute("customers", customers);
+        
+            List<Product> productsss = service.getAllProducts(); 
+            productsss.forEach(p -> {
+                p.setSuppliers(null);
+            });
+            model.addAttribute("products", productsss);
+            
             return "addOrder";
         }
         
@@ -147,7 +160,7 @@ public class OrderController {
 
         if(violations.isEmpty()) {  
             if(order.getProducts() == null) {                 
-                return "redirect:/orders";
+                return "redirect:/addOrder";
             }
             Order orderDao = service.addOrder(order);  
             
@@ -173,6 +186,9 @@ public class OrderController {
             ldt = LocalDate.parse(request.getParameter("date"));
         }
         else{
+            List<Customer> customers = service.getAllCustomers();
+            model.addAttribute("customers", customers); 
+        
             List<Order> orders = service.getAllOrders();
             model.addAttribute("orders", orders);
             return "orders";
@@ -236,16 +252,23 @@ public class OrderController {
 
         Invoice invoiceUpdate = service.getInvoiceForOrder(order);
         
-        String[] productsId = request.getParameterValues("products");
+        String[] productsId = request.getParameterValues("productsId");
         List<Product> products = new ArrayList<>();
         
         if(productsId != null){
-            for(String productId: productsId) {
-                products.add(service.getProductByID(Integer.parseInt(productId)));
+            for(String id : productsId) {
+                products.add(service.getProductByID(Integer.parseInt(id)));
             }
-        }   
-        order.setProducts(products);   
-        model.addAttribute("productsList", products);
+            order.setProducts(products); 
+            
+        }  
+        if(order.getProducts() == null) {  
+                
+                model.addAttribute("order", order);
+                return "redirect:/editOrder";
+            }
+        //order.setProducts(products);   
+        //model.addAttribute("productsList", products);
         
         BigDecimal total;
         BigDecimal shipppingHandling = new BigDecimal("3.99");
@@ -275,57 +298,53 @@ public class OrderController {
         order.setCustomer(customer);
         //model.addAttribute("customer", customer);
         
-        LocalDate ldt;
+        LocalDate ldt = LocalDate.now().plusDays(1);
         String date = request.getParameter("date");
         if(!request.getParameter("date").equals("")){
             ldt = LocalDate.parse(request.getParameter("date"));
-        }else{        
-            Order o = service.getOrderByID(order.getId());
-            model.addAttribute("order", o);
-            //model.addAttribute("productsList", products);
-            Invoice invoice1 = service.getInvoiceForOrder(order);
-            model.addAttribute("invoice", invoice1);
-        
-            return "editOrder";
         }
+//        }else{        
+//            Order o = service.getOrderByID(order.getId());
+//            model.addAttribute("order", o);
+//            //model.addAttribute("productsList", products);
+//            Invoice invoice1 = service.getInvoiceForOrder(order);
+//            model.addAttribute("invoice", invoice1);
+//            
+//            List<Customer> customers = service.getAllCustomers();        
+//            model.addAttribute("customers", customers);
+//        
+//            List<Product> productsss = service.getAllProducts(); 
+//            productsss.forEach(p -> {
+//                p.setSuppliers(null);
+//            });
+//            model.addAttribute("products", productsss);
+//        
+//            return "editOrder";
+//        }
         
         invoiceUpdate.setDueDate(ldt);
         invoiceUpdate.setShipDate(ldt.plusDays(7));
         invoiceUpdate.setNotes(request.getParameter("notes"));       
         
-        invoiceUpdate.setSaleRepName(request.getParameter("saleRepName")); 
-        
-//        if(invoiceUpdate.getSaleRepName().isBlank()){
-//            
-//        }
-        
+        invoiceUpdate.setSaleRepName(request.getParameter("saleRepName"));         
         service.updateInvoice(invoiceUpdate);
         
         if (result.hasErrors()) {
+            Order o = service.getOrderByID(order.getId());
+            model.addAttribute("order", o);
+            
             List<Customer> customers = service.getAllCustomers();        
             model.addAttribute("customers", customers);
 
-            Invoice invoice2 = service.getInvoiceForOrder(order);
-            model.addAttribute("invoice", invoice2);
+            Invoice invoice1 = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice", invoice1);
 
             List<Product> productsList = service.getAllProducts(); 
             productsList.forEach(p -> {
                 p.setSuppliers(null);
             });
-            model.addAttribute("products", products);
-            /*Order orderDao = service.getOrderByID(order.getId());
-            model.addAttribute("order", orderDao);
+            model.addAttribute("products", productsList);
             
-            List<Customer> allCustomers = service.getAllCustomers();
-            model.addAttribute("customers", allCustomers);
-            
-            List<Product> allProducts;
-            allProducts= service.getAllProducts();
-            model.addAttribute("productsList", allProducts);
-            
-            //model.addAttribute("productsList", products);
-            Invoice invoice = service.getInvoiceForOrder(order);
-            model.addAttribute("invoice", invoice);*/
             return "editOrder";
         }
         

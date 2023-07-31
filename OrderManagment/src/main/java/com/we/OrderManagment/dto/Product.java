@@ -17,7 +17,7 @@ public class Product {
     
     private int id;
     
-    @NotBlank(message = "Description must not be blank")
+//    @NotBlank(message = "Description must not be blank")
     @Size(max = 255, message="Description must be fewer than 255 characters")
     private String description;
     
@@ -26,14 +26,14 @@ public class Product {
     private String name;
     
     //@Digits(integer=9, fraction=0)
-    @NotNull(message = "Quantity must not be blank")
-    @Min (value=1, message = "The product must have an existence" )
-    private int quantity = 0;
+    //@Min (value=1, message = "The product must have an existence" )
+    @NotNull(message = "Quantity must not be blank")    
+    private int quantity=0;
     
 //    @NotNull(message = "The tax information must not be empty")
     private boolean isTax = true;
     
-    @NotNull(message = "The price must not be empty")
+    @NotNull(message = "The product must have a price")
     private BigDecimal price;
     
     private List<Supplier> suppliers;

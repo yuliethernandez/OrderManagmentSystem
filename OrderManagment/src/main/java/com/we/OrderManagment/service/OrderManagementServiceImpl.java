@@ -180,6 +180,18 @@ public class OrderManagementServiceImpl implements OrderManagementService{
     public List<Product> getAllProducts() {
         return productDao.getAllProducts();
     }
+    @Override
+    public List<Product> getAllProductsInExistence() {
+        List<Product> list = productDao.getAllProducts();
+        List<Product> productsInExistence = productDao.getAllProducts();
+        list.forEach(p -> {
+            if(p.getQuantity()>0){
+                productsInExistence.add(p);
+            }
+        });
+                
+        return productsInExistence;
+    }
 
     @Override
     public Product addProduct(Product product) {

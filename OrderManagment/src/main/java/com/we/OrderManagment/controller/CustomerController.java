@@ -55,7 +55,7 @@ public class CustomerController {
         }else{
             return "customers";
         }
-        
+        violations = new HashSet<>();
         model.addAttribute("customer", customer);
         
         return "editCustomer";
@@ -66,8 +66,8 @@ public class CustomerController {
     public String editCustomer(@Valid Customer customer, BindingResult result, 
             HttpServletRequest request, Model model) {
         
-//        String gstNumber = request.getParameter("gstNumber");
-//        customer.setGstNumber(Integer.parseInt(gstNumber));
+        String gstNumber = request.getParameter("gstNumber");
+        customer.setGstNumber(Integer.parseInt(gstNumber));
         
         if (result.hasErrors()) {
             Customer cust = service.getCustomerByID(customer.getId());
