@@ -4,6 +4,8 @@ package com.we.OrderManagment.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 public class Invoice {
@@ -11,7 +13,10 @@ public class Invoice {
     private int id;    
     private LocalDate shipDate;
     private LocalDate dueDate;
-    private String terms="Terms in the contract";   
+    private String terms="Terms in the contract"; 
+    
+    @NotNull(message = "The total must not be empty")
+    @Size(max = 255, message="Description must be fewer than 255 characters")
     private String saleRepName;   
     private BigDecimal hstTax;  
     private BigDecimal subtotal;

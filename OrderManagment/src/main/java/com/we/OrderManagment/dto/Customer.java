@@ -4,12 +4,11 @@ package com.we.OrderManagment.dto;
 import java.util.Objects;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Range;
 
 
 public class Customer {
@@ -31,20 +30,23 @@ public class Customer {
     @Size(max = 7, message="Zipcode must be fewer than 50 characters")
     private String zipcode;
     
-    @NotBlank(message = "Email must not be blank")
-    @Email(message = "Please provide a valid email address")
+    @NotBlank(message = "Enter valid Email Id")
+    @Email(message = "Enter valid Email Id")
+    @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", message = "Enter valid Email Id")
     private String email;
     
-    @Digits(integer=9, fraction=0)
+    @Digits(integer=9, fraction=0, message = "Enter valid GST Number, it must have 9 numbers")
+    @NotNull(message = "GST Number must not be blank")
+    @Min (value=100000000, message = "GST Number must contains 9 digits" )
     private int gstNumber;
     
-    @Size(max = 7, message="GST Extension must be fewer than 7 characters")
+    @Size(min = 7, max = 7, message="GST Extension must contains 7 characters")
     @NotBlank(message = "GST Extension must not be blank")
     private String gstExtension;
     
     @NotBlank(message = "Phone must not be blank")
-    @Size(max = 20, message="Phone must be fewer than 20 characters")
-    @Pattern(regexp = "^(\\d{3}-\\d{3}-\\d{4}|\\d+)$", message = "Phone must be in the format XXX-XXX-XXXX, where X represents a number")
+    @Size(max = 10, message="Phone must be fewer than 10 characters")
+    //@Pattern(regexp = "^(\\d{3}-\\d{3}-\\d{4}|\\d+)$", message = "Phone must be in the format XXX-XXX-XXXX, where X represents a number")
     private String phone;
 
     public int getId() {

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,8 +25,9 @@ public class Product {
     @Size(max = 50, message="Name must be fewer than 50 characters")
     private String name;
     
-    @Digits(integer=9, fraction=0)
+    //@Digits(integer=9, fraction=0)
     @NotNull(message = "Quantity must not be blank")
+    @Min (value=1, message = "The product must have an existence" )
     private int quantity = 0;
     
 //    @NotNull(message = "The tax information must not be empty")

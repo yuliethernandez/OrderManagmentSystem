@@ -87,6 +87,9 @@ public class SupplierController {
         model.addAttribute("products", products);
         model.addAttribute("errors", violations);
         
+        Supplier supplier = new Supplier();        
+        model.addAttribute("supplier", supplier);
+        
         return "addSupplier";
     }
    
@@ -112,8 +115,9 @@ public class SupplierController {
         violations = validate.validate(supplier);
 
         if(violations.isEmpty()) {  
-            if(supplier.getProducts() == null) {                 
-                return "redirect:/suppliers";
+            if(supplier.getProducts() == null) {  
+                model.addAttribute("supplier", supplier);
+                return "redirect:/addSupplier";
             }
             service.addSupplier(supplier);            
             return "redirect:/suppliers";

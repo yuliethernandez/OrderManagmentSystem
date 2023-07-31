@@ -120,7 +120,7 @@ public class OrderController {
         
         BigDecimal total= BigDecimal.ZERO;
         BigDecimal shipppingHandling = new BigDecimal("3.99");
-        BigDecimal subtotal = BigDecimal.ZERO;;        
+        BigDecimal subtotal = BigDecimal.ZERO;      
         int quantity = 0;
         
         for(Product p: products){
@@ -220,18 +220,18 @@ public class OrderController {
         Invoice invoice = service.getInvoiceForOrder(order);
         model.addAttribute("invoice", invoice);
         
-        List<Product> productsList = service.getAllProducts(); 
-        productsList.forEach(p -> {
+        List<Product> products = service.getAllProducts(); 
+        products.forEach(p -> {
             p.setSuppliers(null);
         });
-        model.addAttribute("productsList", productsList);
+        model.addAttribute("products", products);
         
         return "editOrder";
         
     }
     
     @PostMapping("editOrder")
-    public String editOrder(@Valid Order order, BindingResult result, 
+    public String editOrder(@Valid Invoice invoice, @Valid Order order, BindingResult result, 
             HttpServletRequest request, Model model) {
 
         Invoice invoiceUpdate = service.getInvoiceForOrder(order);
@@ -283,20 +283,37 @@ public class OrderController {
             Order o = service.getOrderByID(order.getId());
             model.addAttribute("order", o);
             //model.addAttribute("productsList", products);
-            Invoice invoice = service.getInvoiceForOrder(order);
-            model.addAttribute("invoice", invoice);
+            Invoice invoice1 = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice", invoice1);
         
             return "editOrder";
         }
         
         invoiceUpdate.setDueDate(ldt);
         invoiceUpdate.setShipDate(ldt.plusDays(7));
-        invoiceUpdate.setNotes(request.getParameter("notes"));
+        invoiceUpdate.setNotes(request.getParameter("notes"));       
+        
         invoiceUpdate.setSaleRepName(request.getParameter("saleRepName")); 
+        
+//        if(invoiceUpdate.getSaleRepName().isBlank()){
+//            
+//        }
+        
         service.updateInvoice(invoiceUpdate);
         
-        /*if (result.hasErrors()) {
-            Order orderDao = service.getOrderByID(order.getId());
+        if (result.hasErrors()) {
+            List<Customer> customers = service.getAllCustomers();        
+            model.addAttribute("customers", customers);
+
+            Invoice invoice2 = service.getInvoiceForOrder(order);
+            model.addAttribute("invoice", invoice2);
+
+            List<Product> productsList = service.getAllProducts(); 
+            productsList.forEach(p -> {
+                p.setSuppliers(null);
+            });
+            model.addAttribute("products", products);
+            /*Order orderDao = service.getOrderByID(order.getId());
             model.addAttribute("order", orderDao);
             
             List<Customer> allCustomers = service.getAllCustomers();
@@ -308,9 +325,9 @@ public class OrderController {
             
             //model.addAttribute("productsList", products);
             Invoice invoice = service.getInvoiceForOrder(order);
-            model.addAttribute("invoice", invoice);
+            model.addAttribute("invoice", invoice);*/
             return "editOrder";
-        }*/
+        }
         
         
         service.updateOrder(order);

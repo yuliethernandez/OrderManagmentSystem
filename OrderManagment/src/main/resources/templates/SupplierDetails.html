@@ -76,7 +76,7 @@
                     <tr th:each="product: ${supplier.products}">
                         <td th:text="${product.name}">Product's Name</td>
                         <td th:text="${product.description}">Description</td>
-                        <td th:text="${product.price}">Price</td>
+                        <td th:text="${'$' + product.price}">Price</td>
                     </tr>
                     </tbody>                
                 </table>

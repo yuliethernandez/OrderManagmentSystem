@@ -21,12 +21,13 @@ public class Supplier {
     private String address;
     
     @NotBlank(message = "Phone must not be blank")
-    @Size(max = 20, message="Phone must be fewer than 20 characters")
-    @Pattern(regexp = "^(\\d{3}-\\d{3}-\\d{4}|\\d+)$", message = "Phone must be in the format XXX-XXX-XXXX, where X represents a number")
+    @Size(max = 10, message="Phone must be fewer than 10 characters")
+    //@Pattern(regexp = "^(\\d{3}-\\d{3}-\\d{4}|\\d+)$", message = "Phone must be in the format XXX-XXX-XXXX, where X represents a number")
     private String phonenumber;
     
-    @NotBlank(message = "Email must not be blank")
-    @Email(message = "Please provide a valid email address")
+    @NotBlank(message = "The Email Id is blank")
+    @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", message = "The Email Id is not correct")
+    //@Email(message = "Enter valid Email Id")
     private String email;
     
     @Size(max = 255, message="Description must be fewer than 255 characters")

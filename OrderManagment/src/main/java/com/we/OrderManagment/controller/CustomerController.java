@@ -96,8 +96,10 @@ public class CustomerController {
         customer.setEmail(request.getParameter("email"));
         String gstNumber = request.getParameter("gstNumber");
         
-        if(!gstNumber.isBlank()){
+        if(!gstNumber.isBlank() && gstNumber.length() == 9 && isNumber(gstNumber)){
             customer.setGstNumber(Integer.parseInt(gstNumber));
+        }else{
+            customer.setGstNumber(1);
         }
         
         customer.setGstExtension(request.getParameter("gstExtension"));
@@ -113,6 +115,31 @@ public class CustomerController {
         }
                 
         return "redirect:/addCustomer";
+
+    }
+    
+    private boolean isNumber(String gstNumber){
+        if (gstNumber == null) {
+            return false;
+        }
+        int length = gstNumber.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (gstNumber.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = gstNumber.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
 
     }
    
