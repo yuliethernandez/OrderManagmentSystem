@@ -1,88 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Order's Management System</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Order's Management System</a>
-    </div>
-    <ul class="nav navbar-nav">      
-      <li><a href="orders">Orders</a></li>
-      <li><a href="invoices">Invoices</a></li>
-      <li><a href="products">Products</a></li>
-      <li><a href="customers">Customers</a></li>
-      <li><a href="suppliers">Suppliers</a></li>
-    </ul>
-  </div>
-</nav>
-  
-<div class="container"> 
-    <h2>All Invoices</h2>
-    <p>Here you will find all the invoices of the System:</p>
-    <hr>
-    <div class="row m-4 border ">
-        <div class="col text-left m-3">
-            <br>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Invoice #</th>
-                    <th>Due Date</th>
-                    <th>Ship Date</th>
-                    <th>Sale Rep. Name</th>
-                    <th>Total</th>
-                    <th>HST Taxes</th>
-                    <th>Order #</th>
-                    <th>Details</th>
-                    <th>Print</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="invoice: ${invoices}">
-                    <td th:text="${invoice.id}">Invoice #</td>
-                    <td th:text="${invoice.dueDate}">Due Date</td>
-                    <td th:text="${invoice.shipDate}">Ship Date</td>
-                    <td th:text="${invoice.saleRepName}">Sale Rep. Name</td>
-                    <td th:text="${'$' + invoice.order.total}">Total</td>
-                    <td th:text="${'$' + invoice.hstTax}">HST Taxes</td>
-                    <td th:text="${invoice.order.id}">Order #</td>
-                    <td><a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a></td>
-                    <td><a href="#" th:href="@{/editInvoice(id=${invoice.id})}">Print</a></td>
-                </tr>
-                </tbody>                
-            </table>
+  <head>
+    <title>Order's Management System</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Order's Management System</a>
         </div>
-    </div>  
-</div>
+        <ul class="nav navbar-nav">
+          <li><a href="orders">Orders</a></li>
+          <li><a href="invoices">Invoices</a></li>
+          <li><a href="products">Products</a></li>
+          <li><a href="customers">Customers</a></li>
+          <li><a href="suppliers">Suppliers</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<footer>
-    <div class="footer">
-        <p>Footer</p>
+    <div class="container" id="invoices">
+      <div class="row" id="header_page">
+        <h2>Invoices</h2>
+        <p id="line_header">
+          Here you will find all the invoices of the System:
+        </p>
+        <button id="print" class="btn btn-primary" onclick="printInvoice()">
+          Print All
+        </button>
+        <hr />
       </div>
 
-</footer>
-    
-</body>
+      <div class="row m-4 border">
+        <div class="col text-left m-3">
+          <br />
+          <table class="table table-striped" id="table">
+            <thead id="tableHeader">
+              <tr id="rowHeader">
+                <th>Invoice #</th>
+                <th>Due Date</th>
+                <th>Ship Date</th>
+                <th>Sale Rep. Name</th>
+                <th>Total</th>
+                <th>HST Taxes</th>
+                <th>Order #</th>
+                <span id="detailsInvoiceHeader">
+                  <th>Details</th>
+                </span>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr th:each="invoice: ${invoices}" id="contentTable">
+                <td th:text="${invoice.id}">Invoice #</td>
+                <td th:text="${invoice.dueDate}">Due Date</td>
+                <td th:text="${invoice.shipDate}">Ship Date</td>
+                <td th:text="${invoice.saleRepName}">Sale Rep. Name</td>
+                <td th:text="${'$' + invoice.order.total}">Total</td>
+                <td th:text="${'$' + invoice.hstTax}">HST Taxes</td>
+                <td th:text="${invoice.order.id}">Order #</td>
+                <td><a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <p id="datePrint" style="display: none"></p>
+        </div>
+      </div>
+    </div>
 
-<style>
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background: black;
-  width: 100%;
-  color: white;
-  text-align: center;
-}
-</style>
+    <script type="text/javascript" th:inline="javascript">
+      var date = document.getElementById("datePrint");
+      var table = document.getElementById("table");
+      var lengthTable = table.rows.length;
+      
+      var cellDetails = '<a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a>';
+      
+      var numRows = table.rows.length;
 
+      function printInvoice() {
+        date.innerHTML = "Printed: " + Date().toLocaleString().substring(0, 15);
+        date.style.display = "block";
+        document.getElementById("line_header").style.display = "none";
+        document.getElementById("print").style.display = "none";
+
+        for (var i = 0; i < numRows; i++) {
+          table.rows[i].deleteCell(7);
+        }
+        //Printing the table
+        printJS("invoices", "html");
+        //showing again all the datas
+        document.getElementById("print").style.display = "block";
+        document.getElementById("line_header").style.display = "block";
+        date.style.display = "none";
+
+        //adding the cells to the table again  --> OK
+        var cellHeader = document.createElement("TH");
+        var txt = document.createTextNode("Details");
+        cellHeader.appendChild(txt);
+        document.getElementById("rowHeader").appendChild(cellHeader);
+
+        //adding the details link: Details to each rows --> to finish
+        //var linkDetails = document.createElement("a");
+        //var linkTextDetails = document.createTextNode("Details");
+        //linkDetails.setAttribute("href", "#"); 
+        //linkDetails.setAttribute("th:href", "@{/invoiceDetails(id=${invoice.id})}");
+        //linkDetails.appendChild(linkTextDetails);    
+        
+        var cellRowDetails = document.createElement("TD");
+        //cellRowDetails.append(linkDetails);
+        //cellRowDetails.append(cellBodyDetails);
+        for (var i = 1; i < numRows; i++) {
+           var newCell = table.rows[i].insertCell(-1);
+           newCell.innerHTML = cellDetails; 
+           newCell.setAttribute("id","cellDetails");
+           
+        }
+      }
+    </script>
+  </body>
+  <!--Footer-->
+  <footer class="bg-light text-lg-start" id="footer">
+    <hr class="m-0" />
+
+    <!-- Copyright -->
+    <div
+      class="text-center p-3"
+      style="background-color: rgba(0, 0, 0, 0.2)"
+      id="link"
+    >
+      © 2023 Copyright:
+      <a
+        class="text-dark"
+        href="https://github.com/yuliethernandez/OrderManagmentSystem"
+        target="_blank"
+        >GitHub</a
+      >
+    </div>
+    <!-- Copyright -->
+  </footer>
 </html>

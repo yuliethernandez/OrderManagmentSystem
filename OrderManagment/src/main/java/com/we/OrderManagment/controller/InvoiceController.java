@@ -27,8 +27,6 @@ public class InvoiceController {
         List<Invoice> invoices = service.getAllInvoices();
         model.addAttribute("invoices", invoices);
         
-        
-                
         return "invoices";
     }
     

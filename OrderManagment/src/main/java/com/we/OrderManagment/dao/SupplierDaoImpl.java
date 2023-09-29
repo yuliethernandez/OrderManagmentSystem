@@ -18,6 +18,7 @@ public class SupplierDaoImpl implements SupplierDao{
     @Autowired
     JdbcTemplate jdbc;
     
+    
     @Override //can return null, check in service
     public Supplier getSupplierByID(int id) {
         final String GET_SUPPLIER_BY_ID = "SELECT * FROM supplier WHERE supplierId = ?";
