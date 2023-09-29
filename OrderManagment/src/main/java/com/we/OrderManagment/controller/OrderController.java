@@ -262,13 +262,10 @@ public class OrderController {
             order.setProducts(products); 
             
         }  
-        if(order.getProducts() == null) {  
-                
+        if(order.getProducts() == null) {                  
                 model.addAttribute("order", order);
                 return "redirect:/editOrder";
             }
-        //order.setProducts(products);   
-        //model.addAttribute("productsList", products);
         
         BigDecimal total;
         BigDecimal shipppingHandling = new BigDecimal("3.99");
@@ -303,7 +300,7 @@ public class OrderController {
         if(!request.getParameter("date").equals("")){
             ldt = LocalDate.parse(request.getParameter("date"));
         }
-//        }else{        
+//        else{        
 //            Order o = service.getOrderByID(order.getId());
 //            model.addAttribute("order", o);
 //            //model.addAttribute("productsList", products);
