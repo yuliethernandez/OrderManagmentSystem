@@ -10,7 +10,9 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
   </head>
+  
   <body>
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
@@ -65,30 +67,29 @@
                 <td th:text="${invoice.saleRepName}">Sale Rep. Name</td>
                 <td th:text="${'$' + invoice.order.total}">Total</td>
                 <td th:text="${'$' + invoice.hstTax}">HST Taxes</td>
-                <td th:text="${invoice.order.id}">Order #</td>
-                <td>
-                  <a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}"
-                    >Details</a
-                  >
-                </td>
+                <td th:id="${invoice.id}" th:text="${invoice.order.id}">Order #</td>
+                <td><a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a></td>
               </tr>
             </tbody>
           </table>
           <p id="datePrint" style="display: none"></p>
         </div>
       </div>
-    </div>
-
+    </div>    
     <script type="text/javascript" th:inline="javascript">
       var date = document.getElementById("datePrint");
       var table = document.getElementById("table");
-      var lengthTable = table.rows.length;
-
-      var cellDetails =
-        '<a href="#" th:href="@{/invoiceDetails(id=${invoice.id})}">Details</a>';
-
       var numRows = table.rows.length;
-
+      //saving the id of each row
+      const arrayId = [];
+      for (var i = 1; i < numRows; i++) {
+          var table = document.getElementById("table");
+            var row = table.rows[i];
+            var cell = row.cells[6];
+            var cellId = cell.id;
+            arrayId.push(cellId);
+      }   
+      
       function printInvoice() {
         date.innerHTML = "Printed: " + Date().toLocaleString().substring(0, 15);
         date.style.display = "block";
@@ -100,32 +101,38 @@
         }
         //Printing the table
         window.print();
+        
         //showing again all the datas
         document.getElementById("print").style.display = "block";
         document.getElementById("line_header").style.display = "block";
         date.style.display = "none";
 
-        //adding the cells to the table again
+        //adding the cells to the table again  --> OK
         var cellHeader = document.createElement("TH");
         var txt = document.createTextNode("Details");
         cellHeader.appendChild(txt);
         document.getElementById("rowHeader").appendChild(cellHeader);
 
+        //adding the details link: Details to each rows
+        //var linkDetails = document.createElement("a");
+        //var linkTextDetails = document.createTextNode("Details");
+        //linkDetails.setAttribute("href", "#"); 
+        //linkDetails.setAttribute("th:href", "@{/invoiceDetails(id=${invoice.id})}");
+        //linkDetails.appendChild(linkTextDetails);    
+        
         var cellRowDetails = document.createElement("TD");
-
-        for (var i = 1; i < numRows; i++) {
-          var newCell = table.rows[i].insertCell(-1);
-          newCell.innerHTML = cellDetails;
-          newCell.setAttribute("id", "cellDetails");
+        for (var i = 1; i < numRows; i++) {            
+            var link = "/invoiceDetails?id=" + arrayId[i-1];
+            var cellDetails = '<a href="' + link + '">Details</a>';  
+            var newCell = table.rows[i].insertCell(-1);
+            newCell.innerHTML = cellDetails; 
+            newCell.setAttribute("id","cellDetails");           
         }
       }
     </script>
   </body>
-  <!--Footer-->
   <footer class="bg-light text-lg-start" id="footer">
     <hr class="m-0" />
-
-    <!-- Copyright -->
     <div
       class="text-center p-3"
       style="background-color: rgba(0, 0, 0, 0.2)"
@@ -139,6 +146,5 @@
         >GitHub</a
       >
     </div>
-    <!-- Copyright -->
   </footer>
 </html>

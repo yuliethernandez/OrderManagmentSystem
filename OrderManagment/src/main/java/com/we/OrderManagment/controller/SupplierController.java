@@ -61,8 +61,7 @@ public class SupplierController {
         
         model.addAttribute("supplier", supplier);
         
-        return "editSupplier";
-        
+        return "editSupplier";        
     }
     
     @PostMapping("editSupplier")
