@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order: ${orders}">
+                    <tr th:each="order: ${orders}" class="text-left">
                     <td th:text="${order.id}">Order #</td>
                     <td th:text="${order.customer.name}">Customer</td>
                     <td th:text="${order.total}">Total</td>
@@ -84,8 +84,7 @@
                         <div class="form-group row">
                             <label for="notes" class="col-md-4 control-label text-right">Notes:</label>
                             <div class="col-md-6">
-                                <textarea id="notes" name="notes" rows="5" cols="10"class="form-control"></textarea>
-                                                               
+                                <textarea id="notes" name="notes" rows="5" cols="10"class="form-control"></textarea>                                                               
                             </div>                            
                         </div> 
                         
